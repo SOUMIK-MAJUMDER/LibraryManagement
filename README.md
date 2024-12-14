@@ -17,7 +17,7 @@ A Spring based project to manage library operations efficiently. This system sup
 
 - **Backend**:  Java, Spring
 - **Database**: SQL (MySQL)
-- **Frontend**: 
+- **Frontend**: HTML,CSS
 
 ## Installation
 
