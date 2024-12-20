@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 public class Admin {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int AdminId;
     private String FirstName;
     private String LastName;
@@ -61,8 +60,5 @@ public class Admin {
     public void setPassword(String Password) {
         this.Password = Password;
     }
-
-
-
 
 }

@@ -1,11 +1,13 @@
 package com.example.librarymanagement.repository;
 
+
+import org.springframework.data.repository.CrudRepository;
+
 import com.example.librarymanagement.model.Admin;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-@Repository
-public interface AdminRepository extends JpaRepository<Admin, Integer> {
+// This will be AUTO IMPLEMENTED by Spring into a Bean called AdminRepository
+// CRUD refers Create, Read, Update, Delete
 
-    Admin findByUserName(String userName);
+public interface AdminRepository extends CrudRepository<Admin, Integer> {
+
 }
