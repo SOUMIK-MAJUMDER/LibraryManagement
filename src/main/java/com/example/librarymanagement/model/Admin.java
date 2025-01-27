@@ -9,7 +9,7 @@ public class Admin {
     private int AdminId;
     private String FirstName;
     private String LastName;
-    public int ContactNo;
+    public String ContactNo;
     private String UserName;
     private String Password;
 
@@ -37,11 +37,11 @@ public class Admin {
         this.LastName = LastName;
     }
 
-    public int getContactNo() {
+    public String getContactNo() {
         return ContactNo;
     }
 
-    public void setContactNo(int ContactNo) {
+    public void setContactNo(String ContactNo) {
         this.ContactNo = ContactNo;
     }
 

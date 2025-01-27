@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.librarymanagement.model.Admin;
@@ -22,30 +21,22 @@ public class AdminController {
 
     @GetMapping(path = "/")
     public String inputform(Admin admin) {
-        return "admin_form";
+        return "admin_form";  // This will pre-populate the form fields if `admin` is provided.
     }
 
-    @GetMapping(path = "/result")
-    public String result() {
-        return "result";  // result.html (your congratulations page)
+    @PostMapping(path = "/admin/save")
+    public String addNewUser(Admin admin) {  
+        adminRepository.save(admin);
+        return "redirect:/admin/success";  // Redirect to success page
     }
 
-    @PostMapping(path = "/") // Map ONLY POST Requests
-    public @ResponseBody String addNewUser(@RequestParam int AdminId, @RequestParam String FirstName, @RequestParam String LastName) {
-        Admin n = new Admin();
-        n.setAdminId(AdminId);
-        n.setFirstName(FirstName);
-        n.setLastName(LastName);
-        adminRepository.save(n);
-        return "redirect:/result";
+    @GetMapping(path = "/admin/success")
+    public String showSuccessPage() {
+        return "result"; // Success page after form submission
     }
 
-   
-
-
-    @GetMapping(path = "/all")
+    @GetMapping(path = "/admin/all")
     public @ResponseBody Iterable<Admin> getAllUsers() {
         return adminRepository.findAll();
     }
 }
-

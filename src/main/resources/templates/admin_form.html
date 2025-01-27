@@ -1,43 +1,56 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
     <body>
-        <form action="#" th:action="@{/admin/save}" th:object="${admin}" method="post">
+        <form th:action="@{/admin/save}" th:object="${admin}" method="post">
             <table>
                 <tr>
+                    <td>Admin ID:</td>
+                    <td>
+                        <input type="number" th:field="*{adminId}" placeholder="Enter Admin ID" required />
+                    </td>
+                    <td th:if="${#fields.hasErrors('adminId')}" th:errors="*{adminId}">Admin ID Error</td>
+                </tr>
+                <tr>
                     <td>First Name:</td>
-                    <td><input type="text" th:field="*{firstName}" placeholder="Enter first name" /></td>
+                    <td>
+                        <input type="text" th:field="*{firstName}" placeholder="Enter First Name" required />
+                    </td>
                     <td th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">First Name Error</td>
                 </tr>
                 <tr>
                     <td>Last Name:</td>
-                    <td><input type="text" th:field="*{lastName}" placeholder="Enter last name" /></td>
+                    <td>
+                        <input type="text" th:field="*{lastName}" placeholder="Enter Last Name" required />
+                    </td>
                     <td th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Last Name Error</td>
                 </tr>
                 <tr>
                     <td>Contact No:</td>
-                    <td><input type="number" th:field="*{contactNo}" placeholder="Enter contact number" /></td>
+                    <td>
+                        <input type="tel" th:field="*{contactNo}" placeholder="Enter Contact Number" required />
+                    </td>
                     <td th:if="${#fields.hasErrors('contactNo')}" th:errors="*{contactNo}">Contact Number Error</td>
                 </tr>
                 <tr>
                     <td>User Name:</td>
-                    <td><input type="text" th:field="*{userName}" placeholder="Enter user name" /></td>
+                    <td>
+                        <input type="text" th:field="*{userName}" placeholder="Enter User Name" required />
+                    </td>
                     <td th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}">User Name Error</td>
                 </tr>
                 <tr>
                     <td>Password:</td>
-                    <td><input type="password" th:field="*{password}" placeholder="Enter password" /></td>
+                    <td>
+                        <input type="password" th:field="*{password}" placeholder="Enter Password" required />
+                    </td>
                     <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</td>
                 </tr>
                 <tr>
-                    <td><button type="submit">Submit</button></td>
+                    <td colspan="2">
+                        <button type="submit">Submit</button>
+                    </td>
                 </tr>
             </table>
         </form>
     </body>
 </html>
-
-
-
-
-
-
