@@ -25,9 +25,15 @@ public class AdminController {
     }
 
     @PostMapping(path = "/admin/save")
-    public String addNewUser(Admin admin) {  
-        adminRepository.save(admin);
-        return "redirect:/admin/success";  // Redirect to success page
+    public String addNewUser(Admin admin) { 
+        try{
+            adminRepository.save(admin);
+            return "redirect:/admin/success";  // Redirect to success page if the form is submitted successfully
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "error";  // Redirect to error page if an exception occurs
+        }
+        
     }
 
     @GetMapping(path = "/admin/success")
