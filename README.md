@@ -1,3 +1,6 @@
+SOUMIK MAJUMDER
+
+
 # Library Management System
 
 A Spring based project to manage library operations efficiently. This system supports user management, book lending, and inventory tracking, built with **Java**, **SQL**, and **Spring Framework**.

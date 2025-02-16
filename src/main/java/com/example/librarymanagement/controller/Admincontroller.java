@@ -19,7 +19,7 @@ public class AdminController {
         this.adminRepository = adminRepository;
     }
 
-    @GetMapping(path = "/")
+    @GetMapping(path = "/adminform")
     public String inputform(Admin admin) {
         return "admin_form";  // This will pre-populate the form fields if `admin` is provided.
     }

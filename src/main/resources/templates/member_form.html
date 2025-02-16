@@ -1,0 +1,256 @@
+<!-- <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Member Registration</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e3f2fd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            width: 90%;
+            max-width: 500px;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        h2 {
+            text-align: center;
+            color: #0277bd;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #bbb;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        select {
+            background-color: white;
+            appearance: none;
+        }
+        button {
+            background-color: #0277bd;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            margin-top: 15px;
+        }
+        button:hover {
+            background-color: #01579b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Member Registration</h2>
+        <form th:action="@{/member/save}" th:object="${member}" method="post">
+            
+            <label for="memberId">Member ID</label>
+            <input type="number" id="memberId" th:field="*{memberId}" placeholder="Enter Member ID" required>
+            <span th:if="${#fields.hasErrors('memberId')}" th:errors="*{memberId}"></span>
+            
+             <label for="firstName">First Name</label>
+            <input type="text" id="firstName" th:field="*{firstName}" placeholder="Enter First Name" required>
+            <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
+            
+            <label for="lastName">Last Name</label>
+            <input type="text" id="lastName" th:field="*{lastName}" placeholder="Enter Last Name" required>
+            <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+            
+            <label for="contactNo">Contact No</label>
+            <input type="tel" id="contactNo" th:field="*{contactNo}" placeholder="Enter Contact Number" required 
+                pattern="[0-9]{10}" title="Enter a 10-digit number"
+                oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+            <span th:if="${#fields.hasErrors('contactNo')}" th:errors="*{contactNo}"></span>
+
+            <label for="address">Address</label>
+            <input type="text" id="address" th:field="*{address}" placeholder="Enter Address" required>
+            <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
+
+            <label for="subscriptionType">Subscription Type</label>
+            <select id="subscriptionType" th:field="*{subscriptionType}" required onchange="updateSubscriptionAmount()">
+                <option value="">-- Select Subscription Type --</option>
+                <option value="M">Monthly</option>
+                <option value="Y">Yearly</option>
+            </select>
+            <span th:if="${#fields.hasErrors('subscriptionType')}" th:errors="*{subscriptionType}"></span>
+
+            <label for="subscriptionAmount">Subscription Amount (Yearly=1000 / Monthly=110)</label>
+            <input type="number" id="subscriptionAmount" th:field="*{subscriptionAmount}" placeholder="Enter Subscription Amount" required readonly>
+            <span th:if="${#fields.hasErrors('subscriptionAmount')}" th:errors="*{subscriptionAmount}"></span>
+
+            <label for="fineAmount">Fine Amount</label>
+            <input type="number" id="fineAmount" th:field="*{fineAmount}" placeholder="Enter Fine Amount" step="0.01" required>
+            <span th:if="${#fields.hasErrors('fineAmount')}" th:errors="*{fineAmount}"></span>
+            
+            <button type="submit">Register</button>
+        </form>
+    </div>
+
+    <script>
+        function updateSubscriptionAmount() {
+            var type = document.getElementById("subscriptionType").value;
+            var amountField = document.getElementById("subscriptionAmount");
+
+            if (type === "M") {
+                amountField.value = 110;
+            } else if (type === "Y") {
+                amountField.value = 1000;
+            } else {
+                amountField.value = ""; 
+            }
+        }
+    </script>
+</body>
+</html> -->
+
+
+
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Member Registration</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e3f2fd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            width: 90%;
+            max-width: 500px;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        h2 {
+            text-align: center;
+            color: #0277bd;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #bbb;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        select {
+            background-color: white;
+            appearance: none;
+        }
+        button {
+            background-color: #0277bd;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            margin-top: 15px;
+        }
+        button:hover {
+            background-color: #01579b;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Member Registration</h2>
+        <form th:action="@{/member/save}" th:object="${member}" method="post">
+            
+
+            <label for="firstName">First Name</label>
+            <input type="text" id="firstName" th:field="*{firstName}" placeholder="Enter First Name" required>
+            <span class="error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
+            
+            <label for="lastName">Last Name</label>
+            <input type="text" id="lastName" th:field="*{lastName}" placeholder="Enter Last Name" required>
+            <span class="error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+            
+            <label for="contactNo">Contact No</label>
+            <input type="tel" id="contactNo" th:field="*{contactNo}" placeholder="Enter Contact Number" required 
+                pattern="[0-9]{10}" title="Enter a 10-digit number"
+                oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+            <span class="error" th:if="${#fields.hasErrors('contactNo')}" th:errors="*{contactNo}"></span>
+
+            <label for="address">Address</label>
+            <input type="text" id="address" th:field="*{address}" placeholder="Enter Address" required>
+            <span class="error" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
+
+            <label for="subscriptionType">Subscription Type</label>
+            <select id="subscriptionType" th:field="*{subscriptionType}" required onchange="updateSubscriptionAmount()">
+                <option value="">-- Select Subscription Type --</option>
+                <option value="M">Monthly</option>
+                <option value="Y">Yearly</option>
+            </select>
+            <span class="error" th:if="${#fields.hasErrors('subscriptionType')}" th:errors="*{subscriptionType}"></span>
+
+            <label for="subscriptionAmount">Subscription Amount (Yearly=1000 / Monthly=110)</label>
+            <input type="number" id="subscriptionAmount" th:field="*{subscriptionAmount}" placeholder="Subscription Amount" required readonly>
+            <span class="error" th:if="${#fields.hasErrors('subscriptionAmount')}" th:errors="*{subscriptionAmount}"></span>
+
+            <label for="fineAmount">Fine Amount</label>
+            <input type="number" id="fineAmount" th:field="*{fineAmount}" placeholder="Enter Fine Amount" step="0.01" required>
+            <span class="error" th:if="${#fields.hasErrors('fineAmount')}" th:errors="*{fineAmount}"></span>
+            
+            <button type="submit">Register</button>
+        </form>
+    </div>
+
+    <script>
+        function updateSubscriptionAmount() {
+            var type = document.getElementById("subscriptionType").value;
+            var amountField = document.getElementById("subscriptionAmount");
+
+            if (type === "M") {
+                amountField.value = 110;
+            } else if (type === "Y") {
+                amountField.value = 1000;
+            } else {
+                amountField.value = ""; 
+            }
+        }
+    </script>
+</body>
+</html>

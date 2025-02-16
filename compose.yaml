@@ -5,16 +5,16 @@ services:
     environment:
       MYSQL_DATABASE: librarymanagementsystem
       MYSQL_ROOT_PASSWORD: Sm@123
-      MYSQL_PASSWORD: Sm@123 
+      # MYSQL_PASSWORD: Sm@123 
     ports:
       - '3307:3306'
-    volumes:
-      - mysql_data:/var/lib/mysql
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pSm@123"]
-      interval: 10s
-      timeout: 5s
-      retries: 3
+#     volumes:
+#       - mysql_data:/var/lib/mysql
+#     healthcheck:
+#       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pSm@123"]
+#       interval: 10s
+#       timeout: 5s
+#       retries: 3
 
-volumes:
-  mysql_data:
+# volumes:
+#   mysql_data:

@@ -7,9 +7,10 @@ public class Admin {
 
     @Id
     private int AdminId;
+
     private String FirstName;
     private String LastName;
-    public String ContactNo;
+    private String ContactNo;
     private String UserName;
     private String Password;
 

@@ -1,56 +1,91 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Registration</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e3f2fd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            width: 90%;
+            max-width: 500px;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        h2 {
+            text-align: center;
+            color: #0277bd;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #bbb;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #0277bd;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            margin-top: 15px;
+        }
+        button:hover {
+            background-color: #01579b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Admin Registration</h2>
         <form th:action="@{/admin/save}" th:object="${admin}" method="post">
-            <table>
-                <tr>
-                    <td>Admin ID:</td>
-                    <td>
-                        <input type="number" th:field="*{adminId}" placeholder="Enter Admin ID" required />
-                    </td>
-                    <td th:if="${#fields.hasErrors('adminId')}" th:errors="*{adminId}">Admin ID Error</td>
-                </tr>
-                <tr>
-                    <td>First Name:</td>
-                    <td>
-                        <input type="text" th:field="*{firstName}" placeholder="Enter First Name" required />
-                    </td>
-                    <td th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">First Name Error</td>
-                </tr>
-                <tr>
-                    <td>Last Name:</td>
-                    <td>
-                        <input type="text" th:field="*{lastName}" placeholder="Enter Last Name" required />
-                    </td>
-                    <td th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Last Name Error</td>
-                </tr>
-                <tr>
-                    <td>Contact No:</td>
-                    <td>
-                        <input type="tel" th:field="*{contactNo}" placeholder="Enter Contact Number" required />
-                    </td>
-                    <td th:if="${#fields.hasErrors('contactNo')}" th:errors="*{contactNo}">Contact Number Error</td>
-                </tr>
-                <tr>
-                    <td>User Name:</td>
-                    <td>
-                        <input type="text" th:field="*{userName}" placeholder="Enter User Name" required />
-                    </td>
-                    <td th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}">User Name Error</td>
-                </tr>
-                <tr>
-                    <td>Password:</td>
-                    <td>
-                        <input type="password" th:field="*{password}" placeholder="Enter Password" required />
-                    </td>
-                    <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <button type="submit">Submit</button>
-                    </td>
-                </tr>
-            </table>
+            <label for="adminId">Admin ID</label>
+            <input type="number" id="adminId" th:field="*{adminId}" placeholder="Enter Admin ID" required>
+            <span th:if="${#fields.hasErrors('adminId')}" th:errors="*{adminId}"></span>
+            
+            <label for="firstName">First Name</label>
+            <input type="text" id="firstName" th:field="*{firstName}" placeholder="Enter First Name" required>
+            <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
+            
+            <label for="lastName">Last Name</label>
+            <input type="text" id="lastName" th:field="*{lastName}" placeholder="Enter Last Name" required>
+            <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+            
+            <label for="contactNo">Contact No</label>
+            <input type="tel" id="contactNo" th:field="*{contactNo}" placeholder="Enter Contact Number" required>
+            <span th:if="${#fields.hasErrors('contactNo')}" th:errors="*{contactNo}"></span>
+            
+            <label for="userName">User Name</label>
+            <input type="text" id="userName" th:field="*{userName}" placeholder="Enter User Name" required>
+            <span th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}"></span>
+            
+            <label for="password">Password</label>
+            <input type="password" id="password" th:field="*{password}" placeholder="Enter Password" required>
+            <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+            
+            <button type="submit">Register</button>
         </form>
-    </body>
+    </div>
+</body>
 </html>
