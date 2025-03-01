@@ -21,6 +21,29 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            position: relative;
+        }
+
+        /* "Go Back" Button */
+        .go-back {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.3);
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            color: white;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .go-back:hover {
+            background: rgba(255, 255, 255, 0.5);
+            color: black;
         }
 
         .container {
@@ -41,7 +64,7 @@
         }
 
         h2 {
-            color: #ffffff; /* White */
+            color: #ffffff;
             font-size: 24px;
             font-weight: 600;
             margin-bottom: 15px;
@@ -56,7 +79,7 @@
         label {
             font-size: 13px;
             font-weight: bold;
-            color: #ffffff; /* White */
+            color: #ffffff;
             text-align: left;
             display: block;
             margin-bottom: 3px;
@@ -82,7 +105,7 @@
 
         input:focus {
             background: rgba(255, 255, 255, 0.5);
-            border: 1px solid #ffffff; /* White */
+            border: 1px solid #ffffff;
         }
 
         /* Password Field Wrapper */
@@ -100,17 +123,17 @@
             top: 50%;
             transform: translateY(-50%);
             cursor: pointer;
-            color: black; /* Black eye icon */
+            color: black;
             font-size: 18px;
             transition: color 0.3s;
         }
 
         .password-wrapper .toggle-password:hover {
-            color: gray; /* Turns gray when hovered */
+            color: gray;
         }
 
         button {
-            background: linear-gradient(135deg, #283593, #1a237e); /* Deep Blue */
+            background: linear-gradient(135deg, #283593, #1a237e);
             color: white;
             padding: 10px;
             border: none;
@@ -136,10 +159,14 @@
         }
     </style>
 
-    <!-- Fix: Add Font Awesome for the Eye Icon -->
+    <!-- Font Awesome for Eye Icon -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js" crossorigin="anonymous"></script>
 </head>
 <body>
+
+    <!-- "Go Back" Button -->
+    <a th:href="@{/loginpage}" class="go-back">Go Back</a>
+
     <div class="container">
         <h2>Admin Registration</h2>
         <form th:action="@{/admin/save}" th:object="${admin}" method="post">

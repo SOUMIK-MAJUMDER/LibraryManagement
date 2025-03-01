@@ -23,6 +23,29 @@
             height: 100vh;
         }
 
+        
+        /* "Go Back" Button */
+        .go-back {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.3);
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            color: white;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .go-back:hover {
+            background: rgba(255, 255, 255, 0.5);
+            color: black;
+        }
+
         .container {
             background: rgba(255, 255, 255, 0.25);
             backdrop-filter: blur(10px);
@@ -141,6 +164,9 @@
     </style>
 </head>
 <body>
+
+    <!-- "Go Back" Button -->
+    <a th:href="@{/loginpage}" class="go-back">Go Back</a>
     <div class="container">
         <h2>Member Registration</h2>
         <form th:action="@{/member/save}" th:object="${member}" method="post">
