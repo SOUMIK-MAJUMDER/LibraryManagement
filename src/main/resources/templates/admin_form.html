@@ -5,64 +5,144 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Registration</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        * {
             margin: 0;
             padding: 0;
-            background-color: #e3f2fd;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: url('/lbry.jpg') no-repeat center center fixed;
+            background-size: cover;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
         }
+
         .container {
-            width: 90%;
-            max-width: 500px;
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        h2 {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(12px);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
             text-align: center;
-            color: #0277bd;
+            max-width: 350px;
+            width: 85%;
+            transition: transform 0.3s ease-in-out;
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
+
+        .container:hover {
+            transform: scale(1.05);
+        }
+
+        h2 {
+            color: #ffffff; /* White */
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
         label {
+            font-size: 13px;
             font-weight: bold;
+            color: #ffffff; /* White */
+            text-align: left;
             display: block;
-            margin-top: 10px;
+            margin-bottom: 3px;
         }
+
         input {
             width: 100%;
             padding: 10px;
-            margin-top: 5px;
-            border: 1px solid #bbb;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-        button {
-            background-color: #0277bd;
-            color: white;
-            padding: 12px;
             border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            width: 100%;
-            font-size: 16px;
-            margin-top: 15px;
+            border-radius: 6px;
+            font-size: 14px;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(5px);
+            color: #fff;
+            transition: 0.3s;
+            outline: none;
+            border: 1px solid rgba(255, 255, 255, 0.5);
         }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        input:focus {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid #ffffff; /* White */
+        }
+
+        /* Password Field Wrapper */
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper input {
+            padding-right: 40px;
+        }
+
+        .password-wrapper .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: black; /* Black eye icon */
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+
+        .password-wrapper .toggle-password:hover {
+            color: gray; /* Turns gray when hovered */
+        }
+
+        button {
+            background: linear-gradient(135deg, #283593, #1a237e); /* Deep Blue */
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
         button:hover {
-            background-color: #01579b;
+            background: linear-gradient(135deg, #1a237e, #0d47a1);
+            transform: translateY(-2px);
+            box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        span {
+            color: #ffccbc;
+            font-size: 10px;
+            text-align: left;
+            display: block;
         }
     </style>
+
+    <!-- Fix: Add Font Awesome for the Eye Icon -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="container">
         <h2>Admin Registration</h2>
         <form th:action="@{/admin/save}" th:object="${admin}" method="post">
-            <label for="adminId">Admin ID</label>
-            <input type="number" id="adminId" th:field="*{adminId}" placeholder="Enter Admin ID" required>
-            <span th:if="${#fields.hasErrors('adminId')}" th:errors="*{adminId}"></span>
             
             <label for="firstName">First Name</label>
             <input type="text" id="firstName" th:field="*{firstName}" placeholder="Enter First Name" required>
@@ -81,11 +161,31 @@
             <span th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}"></span>
             
             <label for="password">Password</label>
-            <input type="password" id="password" th:field="*{password}" placeholder="Enter Password" required>
+            <div class="password-wrapper">
+                <input type="password" id="password" th:field="*{password}" placeholder="Enter Password" required>
+                <i class="fa-solid fa-eye toggle-password" onclick="togglePassword()"></i>
+            </div>
             <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
             
             <button type="submit">Register</button>
         </form>
     </div>
+
+    <script>
+        function togglePassword() {
+            var passwordField = document.getElementById("password");
+            var eyeIcon = document.querySelector(".toggle-password");
+
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                eyeIcon.classList.remove("fa-eye");
+                eyeIcon.classList.add("fa-eye-slash");
+            } else {
+                passwordField.type = "password";
+                eyeIcon.classList.remove("fa-eye-slash");
+                eyeIcon.classList.add("fa-eye");
+            }
+        }
+    </script>
 </body>
 </html>

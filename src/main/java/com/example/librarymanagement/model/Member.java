@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 
 @Entity
-@Table(name = "members") // Optional, but good practice
+//@Table(name = "members") // Optional, but good practice
 public class Member {
 
     @Id

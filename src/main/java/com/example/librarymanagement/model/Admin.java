@@ -3,63 +3,78 @@ package com.example.librarymanagement.model;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "admin") // Optional, but good practice
 public class Admin {
 
     @Id
-    private int AdminId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer adminId;
 
-    private String FirstName;
-    private String LastName;
-    private String ContactNo;
-    private String UserName;
-    private String Password;
+    private String firstName;
+    private String lastName;
+    private String contactNo;
+    private String userName;
+    private String password;
 
-    public int getAdminId() {
-        return AdminId;
+    // Default constructor (required by JPA)
+    public Admin() {
     }
 
-    public void setAdminId(int AdminId) {
-        this.AdminId = AdminId;
+    // Parameterized constructor
+    public Admin( String firstName, String lastName, String contactNo, String userName, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.contactNo = contactNo;
+        this.userName = userName;
+        this.password = password;
+    }
+
+    // Getters and Setters
+    public Integer getAdminId() {
+        return adminId;
+    }
+
+    public void setAdminId(Integer adminId) {
+        this.adminId = adminId;
     }
 
     public String getFirstName() {
-        return FirstName;
+        return firstName;
     }
 
-    public void setFirstName(String FirstName) {
-        this.FirstName = FirstName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getLastName() {
-        return LastName;
+        return lastName;
     }
 
-    public void setLastName(String LastName) {
-        this.LastName = LastName;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getContactNo() {
-        return ContactNo;
+        return contactNo;
     }
 
-    public void setContactNo(String ContactNo) {
-        this.ContactNo = ContactNo;
+    public void setContactNo(String contactNo) {
+        this.contactNo = contactNo;
     }
 
     public String getUserName() {
-        return UserName;
+        return userName;
     }
 
-    public void setUserName(String UserName) {
-        this.UserName = UserName;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getPassword() {
-        return Password;
+        return password;
     }
 
-    public void setPassword(String Password) {
-        this.Password = Password;
+    public void setPassword(String password) {
+        this.password = password;
     }
-
 }
