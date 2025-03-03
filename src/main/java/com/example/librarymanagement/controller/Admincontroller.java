@@ -38,7 +38,7 @@ public class AdminController {
 
     @GetMapping(path = "/admin/success")
     public String showSuccessPage() {
-        return "result"; // Success page after form submission
+        return "adminresult"; // Success page after form submission
     }
 
     @GetMapping(path = "/admin/all")

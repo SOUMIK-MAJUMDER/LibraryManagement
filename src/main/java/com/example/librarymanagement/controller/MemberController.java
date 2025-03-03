@@ -38,7 +38,7 @@ public class MemberController {
 
     @GetMapping(path = "/member/success")
     public String showSuccessPage() {
-        return "result1"; // Success page after form submission
+        return "memberresult"; // Success page after form submission
     }
 
     @GetMapping(path = "/member/all")

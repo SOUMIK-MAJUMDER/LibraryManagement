@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Registration</title>
+    <title>Admin LogInPage</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
@@ -168,10 +168,10 @@
     <a th:href="@{/loginpage}" class="go-back">Go Back</a>
 
     <div class="container">
-        <h2>Admin Registration</h2>
+        <h2>Admin LogIn</h2>
         <form th:action="@{/admin/save}" th:object="${admin}" method="post">
             
-            <label for="firstName">First Name</label>
+            <!-- <label for="firstName">First Name</label>
             <input type="text" id="firstName" th:field="*{firstName}" placeholder="Enter First Name" required>
             <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
             
@@ -181,7 +181,7 @@
             
             <label for="contactNo">Contact No</label>
             <input type="tel" id="contactNo" th:field="*{contactNo}" placeholder="Enter Contact Number" required>
-            <span th:if="${#fields.hasErrors('contactNo')}" th:errors="*{contactNo}"></span>
+            <span th:if="${#fields.hasErrors('contactNo')}" th:errors="*{contactNo}"></span> -->
             
             <label for="userName">User Name</label>
             <input type="text" id="userName" th:field="*{userName}" placeholder="Enter User Name" required>
