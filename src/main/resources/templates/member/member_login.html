@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin LogInPage</title>
+    <title>Member Login Page</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
@@ -27,24 +28,22 @@
         /* "Go Back" Button */
         .go-back {
             position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.3);
-            padding: 10px 15px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: bold;
+            top: 10px;
+            right: 10px;
+            background: #ff6f61;
             color: white;
-            text-transform: uppercase;
+            padding: 8px 16px;
+            border-radius: 6px;
             text-decoration: none;
-            transition: 0.3s;
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            font-weight: bold;
+            transition: background 0.3s ease, transform 0.3s ease;
         }
 
         .go-back:hover {
-            background: rgba(255, 255, 255, 0.5);
-            color: black;
+            background: #d50000;
+            transform: scale(1.05);
         }
+
 
         .container {
             background: rgba(255, 255, 255, 0.2);
@@ -100,7 +99,7 @@
         }
 
         input::placeholder {
-            color:rgba(0, 0, 0, 0.7);
+            color: rgba(0, 0, 0, 0.7);
         }
 
         input:focus {
@@ -151,50 +150,41 @@
             box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.2);
         }
 
-        span {
-            color: #ffccbc;
-            font-size: 10px;
-            text-align: left;
-            display: block;
+        .error-message {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
         }
     </style>
 
     <!-- Font Awesome for Eye Icon -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"
+        crossorigin="anonymous"></script>
 </head>
+
 <body>
 
     <!-- "Go Back" Button -->
-    <a th:href="@{/loginpage}" class="go-back">Go Back</a>
+    <a th:href="@{/memberhome}" class="go-back">Go Back</a>
 
     <div class="container">
-        <h2>Admin LogIn</h2>
-        <form th:action="@{/admin/save}" th:object="${admin}" method="post">
-            
-            <!-- <label for="firstName">First Name</label>
-            <input type="text" id="firstName" th:field="*{firstName}" placeholder="Enter First Name" required>
-            <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
-            
-            <label for="lastName">Last Name</label>
-            <input type="text" id="lastName" th:field="*{lastName}" placeholder="Enter Last Name" required>
-            <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
-            
-            <label for="contactNo">Contact No</label>
-            <input type="tel" id="contactNo" th:field="*{contactNo}" placeholder="Enter Contact Number" required>
-            <span th:if="${#fields.hasErrors('contactNo')}" th:errors="*{contactNo}"></span> -->
-            
+        <h2>Member LogIn</h2>
+        <form th:action="@{/memberlogin}" th:object="${member}" method="post">
+
             <label for="userName">User Name</label>
-            <input type="text" id="userName" th:field="*{userName}" placeholder="Enter User Name" required>
-            <span th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}"></span>
-            
+            <input type="text" id="userName" name="userName" placeholder="Enter User Name" required>
+
             <label for="password">Password</label>
             <div class="password-wrapper">
-                <input type="password" id="password" th:field="*{password}" placeholder="Enter Password" required>
+                <input type="password" id="password" name="password" placeholder="Enter Password" required>
                 <i class="fa-solid fa-eye toggle-password" onclick="togglePassword()"></i>
             </div>
-            <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
-            
-            <button type="submit">Register</button>
+
+            <button type="submit">Login</button>
+
+            <!-- Display error messages if login fails -->
+            <p class="error-message" th:if="${error}" th:text="${error}"></p>
+
         </form>
     </div>
 
@@ -215,4 +205,5 @@
         }
     </script>
 </body>
+
 </html>

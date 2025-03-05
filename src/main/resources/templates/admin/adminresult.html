@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -69,21 +68,17 @@
         }
     </style>
 </head>
-
 <body>
     <div class="container">
-        <h1>Welcome, <span th:text="${member.userName}"></span>!</h1>
-        <p>Your member details:</p>
-        <ul>
-            <li><strong>Member ID:</strong> <span th:text="${member.memberId}"></span></li>
-            <li><strong>Full Name:</strong> <span th:text="${member.firstName} + ' ' + ${member.lastName}"></span></li>
-            <li><strong>Contact No:</strong> <span th:text="${member.contactNo}"></span></li>
-            <li><strong>Address:</strong> <span th:text="${member.address}"></span></li>
-            <li><strong>Subscription Type:</strong> <span th:text="${member.subscriptionType}"></span></li>
-            <li><strong>Subscription Amount:</strong> ₹<span th:text="${member.subscriptionAmount}"></span></li>
-        </ul>
-        <a href="/member/logout">Logout</a>
+        <h1>Successful...</h1>
+        <a href="/adminregistration" class="btn">Go Back</a>
     </div>
 </body>
-
 </html>
+
+
+
+
+
+
+

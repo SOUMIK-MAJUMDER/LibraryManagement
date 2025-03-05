@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Member Registration</title>
+    <title>Admin LogInPage</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
@@ -21,78 +22,75 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            position: relative;
         }
 
-        
         /* "Go Back" Button */
         .go-back {
             position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.3);
-            padding: 10px 15px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: bold;
+            top: 10px;
+            right: 10px;
+            background: #ff6f61;
             color: white;
-            text-transform: uppercase;
+            padding: 8px 16px;
+            border-radius: 6px;
             text-decoration: none;
-            transition: 0.3s;
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            font-weight: bold;
+            transition: background 0.3s ease, transform 0.3s ease;
         }
 
         .go-back:hover {
-            background: rgba(255, 255, 255, 0.5);
-            color: black;
+            background: #d50000;
+            transform: scale(1.05);
         }
 
+
         .container {
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(10px);
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(12px);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
             text-align: center;
-            max-width: 320px;
+            max-width: 350px;
             width: 85%;
             transition: transform 0.3s ease-in-out;
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
         .container:hover {
-            transform: scale(1.03);
+            transform: scale(1.05);
         }
 
         h2 {
             color: #ffffff;
-            font-size: 20px;
+            font-size: 24px;
             font-weight: 600;
-            margin-bottom: 12px;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+            margin-bottom: 15px;
         }
 
         form {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 12px;
         }
 
         label {
-            font-size: 12px;
+            font-size: 13px;
             font-weight: bold;
-            color: #fff;
+            color: #ffffff;
             text-align: left;
             display: block;
-            margin-bottom: 2px;
+            margin-bottom: 3px;
         }
 
-        input, select {
+        input {
             width: 100%;
-            padding: 8px;
+            padding: 10px;
             border: none;
             border-radius: 6px;
-            font-size: 13px;
-            background: rgba(255, 255, 255, 0.6); 
+            font-size: 14px;
+            background: rgba(255, 255, 255, 0.6);
             backdrop-filter: blur(5px);
             color: #000 !important;
             transition: 0.3s;
@@ -104,41 +102,13 @@
             color: rgba(0, 0, 0, 0.7);
         }
 
-        input:focus, select:focus {
-            background: rgba(255, 255, 255, 0.4);
+        input:focus {
+            background: rgba(255, 255, 255, 0.5);
             border: 1px solid #ffffff;
         }
 
-        /* Dropdown Styling */
-        select {
-            appearance: none;
-            cursor: pointer;
-            color: #000; 
-        }
-
-        .select-wrapper {
-            position: relative;
-        }
-
-        .select-wrapper::after {
-            content: '\25BC';
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #000; 
-            pointer-events: none;
-        }
-
-        select option {
-        background: #ffffff; 
-        color: #000; 
-
-            font-size: 13px;
-        }
-
-         /* Password Field Wrapper */
-         .password-wrapper {
+        /* Password Field Wrapper */
+        .password-wrapper {
             position: relative;
         }
 
@@ -162,7 +132,7 @@
         }
 
         button {
-            background: linear-gradient(135deg, #ff6f61, #d50000);
+            background: linear-gradient(135deg, #283593, #1a237e);
             color: white;
             padding: 10px;
             border: none;
@@ -175,9 +145,9 @@
         }
 
         button:hover {
-            background: linear-gradient(135deg, #d50000, #9b0000);
+            background: linear-gradient(135deg, #1a237e, #0d47a1);
             transform: translateY(-2px);
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.2);
         }
 
         span {
@@ -188,15 +158,19 @@
         }
     </style>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js" crossorigin="anonymous"></script>
+    <!-- Font Awesome for Eye Icon -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"
+        crossorigin="anonymous"></script>
 </head>
+
 <body>
 
     <!-- "Go Back" Button -->
-    <a th:href="@{/loginpage}" class="go-back">Go Back</a>
+    <a th:href="@{/adminhome}" class="go-back">Go Back</a>
+
     <div class="container">
-        <h2>Member Registration</h2>
-        <form th:action="@{/member/save}" th:object="${member}" method="post">
+        <h2>Admin LogIn</h2>
+        <form th:action="@{/admin/save}" th:object="${admin}" method="post">
 
             <label for="userName">User Name</label>
             <input type="text" id="userName" th:field="*{userName}" placeholder="Enter User Name" required>
@@ -212,35 +186,16 @@
             <label for="firstName">First Name</label>
             <input type="text" id="firstName" th:field="*{firstName}" placeholder="Enter First Name" required>
             <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
-            
+
             <label for="lastName">Last Name</label>
             <input type="text" id="lastName" th:field="*{lastName}" placeholder="Enter Last Name" required>
             <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
-            
+
             <label for="contactNo">Contact No</label>
-            <input type="tel" id="contactNo" th:field="*{contactNo}" placeholder="Enter Contact Number" required 
-                pattern="[0-9]{10}" title="Enter a 10-digit number"
-                oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+            <input type="tel" id="contactNo" th:field="*{contactNo}" placeholder="Enter Contact Number" required>
             <span th:if="${#fields.hasErrors('contactNo')}" th:errors="*{contactNo}"></span>
 
-            <label for="address">Address</label>
-            <input type="text" id="address" th:field="*{address}" placeholder="Enter Address" required>
-            <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
 
-            <label for="subscriptionType">Subscription Type</label>
-            <div class="select-wrapper">
-                <select id="subscriptionType" th:field="*{subscriptionType}" required onchange="updateSubscriptionAmount()">
-                    <option value="">-- Select Subscription Type --</option>
-                    <option value="M">Monthly</option>
-                    <option value="Y">Yearly</option>
-                </select>
-            </div>
-            <span th:if="${#fields.hasErrors('subscriptionType')}" th:errors="*{subscriptionType}"></span>
-
-            <label for="subscriptionAmount">Subscription Amount</label>
-            <input type="number" id="subscriptionAmount" th:field="*{subscriptionAmount}" placeholder="Auto-filled based on selection" required readonly>
-            <span th:if="${#fields.hasErrors('subscriptionAmount')}" th:errors="*{subscriptionAmount}"></span>
-           
             <button type="submit">Register</button>
         </form>
     </div>
@@ -261,20 +216,6 @@
             }
         }
     </script>
-
-    <script>
-        function updateSubscriptionAmount() {
-            var type = document.getElementById("subscriptionType").value;
-            var amountField = document.getElementById("subscriptionAmount");
-
-            if (type === "M") {
-                amountField.value = 110;
-            } else if (type === "Y") {
-                amountField.value = 1000;
-            } else {
-                amountField.value = ""; 
-            }
-        }
-    </script>
 </body>
+
 </html>

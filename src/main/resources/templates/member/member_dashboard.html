@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Result</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: url('/lbry.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            max-width: 380px;
+            width: 90%;
+            transition: transform 0.3s ease-in-out;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .container:hover {
+            transform: scale(1.05);
+        }
+
+        h1 {
+            color: #222222;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        ul {
+            list-style: none;
+            text-align: left;
+            padding: 0;
+            margin-top: 10px;
+            color: #222222;
+        }
+
+        ul li {
+            background: rgba(255, 255, 255, 0.4);
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #ff6f61, #d50000);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:hover {
+            background: linear-gradient(135deg, #d50000, #9b0000);
+            transform: translateY(-3px);
+            box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Welcome, <span th:text="${member.userName}"></span></h1>
+        <p>Your member details:</p>
+        <ul>
+            <li><strong>Member ID:</strong> <span th:text="${member.memberId}"></span></li>
+            <li><strong>Full Name:</strong> <span th:text="${member.firstName} + ' ' + ${member.lastName}"></span></li>
+            <li><strong>Contact No:</strong> <span th:text="${member.contactNo}"></span></li>
+            <li><strong>Address:</strong> <span th:text="${member.address}"></span></li>
+            <li><strong>Subscription Type:</strong> 
+                <span th:text="${member.subscriptionType == 'M' ? 'Monthly' : (member.subscriptionType == 'Y' ? 'Yearly' : member.subscriptionType)}"></span>
+            </li>
+            <li><strong>Subscription Amount:</strong> ₹<span th:text="${member.subscriptionAmount}"></span></li>
+        </ul>
+        <a href="/member/logout" class="btn">Logout</a>
+    </div>
+</body>
+
+</html>

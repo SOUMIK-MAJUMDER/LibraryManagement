@@ -14,7 +14,6 @@ import com.example.librarymanagement.repository.MemberRepository;
 import jakarta.servlet.http.HttpSession;
 import java.util.Optional;
 
-
 @Controller
 public class MemberController {
 
@@ -27,12 +26,12 @@ public class MemberController {
 
     @GetMapping(path = "/memberhome")
     public String showMemberHomePage() {
-        return "member_home"; // For 'member_home.html' templates
+        return "member/member_home"; // For 'member_home.html' templates
     }
 
     @GetMapping(path = "/memberregistration")
     public String inputform(Member member) {
-        return "member_registration_form"; // This will pre-populate the form fields if admin is provided.
+        return "member/member_registration_form"; // This will pre-populate the form fields if admin is provided.
     }
 
     @PostMapping(path = "/member/save")
@@ -48,26 +47,28 @@ public class MemberController {
 
     @GetMapping(path = "/member/success")
     public String showSuccessPage() {
-        return "memberresult"; // Success page after form submission
+        return "member/memberresult"; // Success page after form submission
     }
-
 
     @GetMapping("/memberlogin")
     public String showLoginPage() {
-    return "member_login"; 
+        return "member/member_login";
     }
 
-
     @PostMapping("/memberlogin")
-    public String loginMember(@RequestParam String userName, @RequestParam String password, Model model, HttpSession session) {
+    public String loginMember(@RequestParam String userName, @RequestParam String password, Model model,
+            HttpSession session) {
         Optional<Member> member = memberRepository.findByUserName(userName);
 
-        if (member.isPresent() && member.get().getPassword().equals(password)) {
+        if (member.isPresent() 
+            && member.get().getUserName().equals(userName)
+            && member.get().getPassword().equals(password)) 
+        {
             session.setAttribute("loggedInMember", member.get());
-            return "redirect:/member/dashboard";  
+            return "redirect:/member/dashboard";
         } else {
             model.addAttribute("error", "Invalid username or password");
-            return "member_login";  
+            return "member/member_login";
         }
     }
 
@@ -76,16 +77,16 @@ public class MemberController {
         Member loggedInMember = (Member) session.getAttribute("loggedInMember");
 
         if (loggedInMember == null) {
-            return "redirect:/member/login";  
+            return "redirect:/member_login";
         }
 
         model.addAttribute("member", loggedInMember);
-        return "member_dashboard";
+        return "member/member_dashboard";
     }
 
     @GetMapping("/member/logout")
     public String logout(HttpSession session) {
-        session.invalidate(); 
+        session.invalidate();
         return "redirect:/memberlogin";
     }
 

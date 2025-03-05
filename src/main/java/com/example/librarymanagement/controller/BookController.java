@@ -21,7 +21,7 @@ public class BookController {
 
     @GetMapping(path = "/allbooks")
     public String inputForm(Book book) {
-        return "bookdetails";  // Loads the book registration form
+        return "book/bookdetails";  // Loads the book registration form
     }
 
     @PostMapping(path = "/book/save")
@@ -37,7 +37,7 @@ public class BookController {
 
     @GetMapping(path = "/book/success")
     public String showSuccessPage() {
-        return "bookresult"; // Success page after book registration
+        return "book/bookresult"; // Success page after book registration
     }
 
     @GetMapping(path = "/book/all")
