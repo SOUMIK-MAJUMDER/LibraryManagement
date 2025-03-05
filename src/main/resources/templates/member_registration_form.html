@@ -137,6 +137,30 @@
             font-size: 13px;
         }
 
+         /* Password Field Wrapper */
+         .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper input {
+            padding-right: 40px;
+        }
+
+        .password-wrapper .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: black;
+            font-size: 18px;
+            transition: color 0.3s;
+        }
+
+        .password-wrapper .toggle-password:hover {
+            color: gray;
+        }
+
         button {
             background: linear-gradient(135deg, #ff6f61, #d50000);
             color: white;
@@ -163,6 +187,8 @@
             display: block;
         }
     </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -171,7 +197,18 @@
     <div class="container">
         <h2>Member Registration</h2>
         <form th:action="@{/member/save}" th:object="${member}" method="post">
-            
+
+            <label for="userName">User Name</label>
+            <input type="text" id="userName" th:field="*{userName}" placeholder="Enter User Name" required>
+            <span th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}"></span>
+
+            <label for="password">Password</label>
+            <div class="password-wrapper">
+                <input type="password" id="password" th:field="*{password}" placeholder="Enter Password" required>
+                <i class="fa-solid fa-eye toggle-password" onclick="togglePassword()"></i>
+            </div>
+            <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+
             <label for="firstName">First Name</label>
             <input type="text" id="firstName" th:field="*{firstName}" placeholder="Enter First Name" required>
             <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
@@ -203,14 +240,27 @@
             <label for="subscriptionAmount">Subscription Amount</label>
             <input type="number" id="subscriptionAmount" th:field="*{subscriptionAmount}" placeholder="Auto-filled based on selection" required readonly>
             <span th:if="${#fields.hasErrors('subscriptionAmount')}" th:errors="*{subscriptionAmount}"></span>
-
-            <label for="fineAmount">Fine Amount</label>
-            <input type="number" id="fineAmount" th:field="*{fineAmount}" placeholder="Enter Fine Amount" step="0.01" required>
-            <span th:if="${#fields.hasErrors('fineAmount')}" th:errors="*{fineAmount}"></span>
-            
+           
             <button type="submit">Register</button>
         </form>
     </div>
+
+    <script>
+        function togglePassword() {
+            var passwordField = document.getElementById("password");
+            var eyeIcon = document.querySelector(".toggle-password");
+
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                eyeIcon.classList.remove("fa-eye");
+                eyeIcon.classList.add("fa-eye-slash");
+            } else {
+                passwordField.type = "password";
+                eyeIcon.classList.remove("fa-eye-slash");
+                eyeIcon.classList.add("fa-eye");
+            }
+        }
+    </script>
 
     <script>
         function updateSubscriptionAmount() {

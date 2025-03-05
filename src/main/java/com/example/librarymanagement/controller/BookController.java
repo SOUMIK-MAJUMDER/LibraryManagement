@@ -19,7 +19,7 @@ public class BookController {
         this.bookRepository = bookRepository;
     }
 
-    @GetMapping(path = "/bookform")
+    @GetMapping(path = "/allbooks")
     public String inputForm(Book book) {
         return "bookdetails";  // Loads the book registration form
     }

@@ -11,20 +11,24 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer memberId;
 
+    private String userName;
+    private String password;
+
     private String firstName;
     private String lastName;
     private String contactNo;
     private String address;
     private String subscriptionType;
     private int subscriptionAmount;
-    private double fineAmount;
 
     // Default constructor (needed by JPA)
     public Member() {
     }
 
     // Parameterized constructor
-    public Member(Integer memberId, String firstName, String lastName, String contactNo, String address, String subscriptionType, int subscriptionAmount, double fineAmount) {
+    public Member(String userName,String password, Integer memberId, String firstName, String lastName, String contactNo, String address, String subscriptionType, int subscriptionAmount) {
+        this.userName = userName;
+        this.password = password;
         this.memberId = memberId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -32,10 +36,27 @@ public class Member {
         this.address = address;
         this.subscriptionType = subscriptionType;
         this.subscriptionAmount = subscriptionAmount;
-        this.fineAmount = fineAmount;
+        
     }
 
     // Getters and Setters
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public Integer getMemberId() {
         return memberId;
     }
@@ -92,11 +113,4 @@ public class Member {
         this.subscriptionAmount = subscriptionAmount;
     }
 
-    public double getFineAmount() {
-        return fineAmount;
-    }
-
-    public void setFineAmount(double fineAmount) {
-        this.fineAmount = fineAmount;
-    }
 }

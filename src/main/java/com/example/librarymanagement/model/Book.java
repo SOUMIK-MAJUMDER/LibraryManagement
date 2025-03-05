@@ -12,7 +12,7 @@ public class Book {
     @Column(nullable = false, length = 255)
     private String title;
 
-    private Integer authorId;
+    private String authorName;
 
     @Column(length = 100)
     private String genre;
@@ -27,10 +27,10 @@ public class Book {
     }
 
     // Parameterized constructor
-    public Book(Integer bookId, String title, Integer authorId, String genre, Integer publicationYear, String isbn) {
+    public Book(Integer bookId, String title, String authorName, String genre, Integer publicationYear, String isbn) {
         this.bookId = bookId;
         this.title = title;
-        this.authorId = authorId;
+        this.authorName = authorName;
         this.genre = genre;
         this.publicationYear = publicationYear;
         this.isbn = isbn;
@@ -53,12 +53,12 @@ public class Book {
         this.title = title;
     }
 
-    public Integer getAuthorId() {
-        return authorId;
+    public String getauthorName() {
+        return authorName;
     }
 
-    public void setAuthorId(Integer authorId) {
-        this.authorId = authorId;
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
     }
 
     public String getGenre() {

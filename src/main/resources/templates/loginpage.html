@@ -76,11 +76,83 @@
 <body>
     <div class="container">
         <h1>Welcome to the Library Management System</h1>
-        <p>Please select a login option:</p>
+        <p>PLEASE SELECT A OPTION:</p>
         <div class="login-buttons">
             <a th:href="@{/adminform}">Admin Login</a>
-            <a th:href="@{/memberform}">Member Login</a>
+            <a th:href="@{/memberhome}">Member</a>
+            <a th:href="@{/allbooks}">All Books</a>
         </div>
     </div>
 </body>
 </html>
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('lbry.jpg') no-repeat center center/cover;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+        }
+        .header {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 10px 20px;
+            border-radius: 8px;
+        }
+        .admin-login {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .member-login {
+            position: absolute;
+            top: 70px;
+            right: 20px;
+        }
+        .login-button {
+            display: inline-block;
+            text-decoration: none;
+            padding: 12px 24px;
+            background: #007BFF;
+            color: white;
+            border-radius: 8px;
+            transition: transform 0.3s, background 0.3s;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .login-button:hover {
+            background: #0056b3;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">Welcome to the Library Management System</div>
+    <div class="admin-login">
+        <a th:href="@{/adminform}" class="login-button">Admin Login</a>
+    </div>
+    <div class="member-login">
+        <a th:href="@{/memberform}" class="login-button">Member Login</a>
+    </div>
+</body>
+</html> -->
