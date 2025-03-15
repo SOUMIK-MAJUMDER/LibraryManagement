@@ -63,7 +63,7 @@
         }
 
         h2 {
-            color: #ffffff;
+            color: hsl(0, 0%, 0%);
             font-size: 24px;
             font-weight: 600;
             margin-bottom: 15px;
@@ -78,7 +78,7 @@
         label {
             font-size: 13px;
             font-weight: bold;
-            color: #ffffff;
+            color: hsl(0, 100%, 0%);
             text-align: left;
             display: block;
             margin-bottom: 3px;
@@ -167,6 +167,10 @@
 
     <!-- "Go Back" Button -->
     <a th:href="@{/adminhome}" class="go-back">Go Back</a>
+
+    <div th:if="${errorMessage}" class="error">
+        <p th:text="${errorMessage}" style="color: red; font-weight: bold;"></p>
+    </div>
 
     <div class="container">
         <h2>Admin LogIn</h2>

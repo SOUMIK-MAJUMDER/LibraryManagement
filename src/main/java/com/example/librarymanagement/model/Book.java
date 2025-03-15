@@ -1,5 +1,7 @@
 package com.example.librarymanagement.model;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -19,8 +21,17 @@ public class Book {
 
     private Integer publicationYear;
 
-    @Column(length = 20)
+    @Column(length = 13)
     private String isbn;
+
+    private boolean isBorrowed = false; // Track book availability
+
+    @ManyToOne
+    @JoinColumn(name = "borrowed_by_id")
+    private Member borrowedBy; // The member who borrowed the book
+
+    private LocalDate borrowedDate; // Date when the book was borrowed
+    private LocalDate returnDate; // Date when the book is to be returned
 
     // Default constructor
     public Book() {
@@ -53,7 +64,7 @@ public class Book {
         this.title = title;
     }
 
-    public String getauthorName() {
+    public String getAuthorName() {
         return authorName;
     }
 
@@ -84,4 +95,38 @@ public class Book {
     public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
+
+    public boolean isBorrowed() {
+        return isBorrowed;
+    }
+
+    public void setBorrowed(boolean borrowed) {
+        isBorrowed = borrowed;
+    }
+
+    public Member getBorrowedBy() {
+        return borrowedBy;
+    }
+
+    public void setBorrowedBy(Member borrowedBy) {
+        this.borrowedBy = borrowedBy;
+    }
+
+    public LocalDate getBorrowedDate() {
+        return borrowedDate;
+    }
+
+    public void setBorrowedDate(LocalDate borrowedDate) {
+        this.borrowedDate = borrowedDate;
+    }
+
+    public LocalDate getReturnDate() { 
+        return returnDate;
+    }
+    
+
+    public void setReturnDate(LocalDate returnDate) {
+        this.returnDate = returnDate;
+    }
+    
 }

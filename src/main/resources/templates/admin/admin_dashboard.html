@@ -24,6 +24,31 @@
             height: 100vh;
         }
 
+        /* "Go Back" Button */
+        .go-back {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff6f61;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .go-back:hover {
+            background: #d50000;
+            transform: scale(1.05);
+        }
+
+        .book_adding{
+            position: absolute;
+            top: 70px;
+            right: 20px;
+        }
+
         .container {
             background: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(15px);
@@ -94,6 +119,9 @@
 </head>
 
 <body>
+    <!-- "Go Back" Button -->
+    <a th:href="@{/adminhome}" class="go-back">Go Back</a>
+    
     <div class="container">
         <h1>Welcome, <span th:text="${admin.userName}"></span></h1>
         <p>Admin details:</p>
@@ -104,6 +132,9 @@
         <div class="btn-container">
             <a href="/admin/logout" class="btn">Logout</a>
         </div>
+    </div>
+    <div class="book_adding">
+        <a th:href="@{/addingbooks}" class="go-back">Add Books</a>
     </div>
 </body>
 

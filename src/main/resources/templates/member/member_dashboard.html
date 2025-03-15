@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Result</title>
+    <title>Member Dashboard</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
@@ -42,7 +42,7 @@
         }
 
         h1 {
-            color: #222222;
+            color: hsl(0, 0%, 0%);
             font-size: 24px;
             font-weight: 700;
             margin-bottom: 15px;
@@ -85,13 +85,45 @@
             transform: translateY(-3px);
             box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.3);
         }
+
+        .top-buttons {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .top-buttons a {
+            background: #ff6f61;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s ease, transform 0.3s ease;
+            text-align: center;
+            width: 120px;
+        }
+
+        .top-buttons a:hover {
+            background: #d50000;
+            transform: scale(1.05);
+        }
     </style>
 </head>
 
 <body>
+    <!-- Top Right Buttons -->
+    <div class="top-buttons">
+        <a href="/book/memberbooklist">Booklist</a>
+        <a href="/book/mybooks">My Books</a> <!-- New Button -->
+    </div>
+
     <div class="container">
         <h1>Welcome, <span th:text="${member.userName}"></span></h1>
-        <p>Your member details:</p>
+        <p>Your membership details:</p>
         <ul>
             <li><strong>Member ID:</strong> <span th:text="${member.memberId}"></span></li>
             <li><strong>Full Name:</strong> <span th:text="${member.firstName} + ' ' + ${member.lastName}"></span></li>

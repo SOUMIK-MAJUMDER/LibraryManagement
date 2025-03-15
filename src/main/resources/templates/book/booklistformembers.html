@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Books</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: url('/lbry.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .go-back {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff6f61;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .go-back:hover {
+            background: #d50000;
+            transform: scale(1.05);
+        }
+
+        .search-bar {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+
+        .search-bar input {
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            width: 200px;
+        }
+
+        .search-bar button {
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: none;
+            background: #ff6f61;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .search-bar button:hover {
+            background: #d50000;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            width: 80%;
+            max-width: 800px;
+            margin-top: 20px;
+        }
+
+        h1 {
+            color: #222222;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .book-list {
+            list-style: none;
+            text-align: left;
+            padding: 0;
+            color: #222222;
+        }
+
+        .book-list li {
+            background: rgba(255, 255, 255, 0.4);
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .borrow-button {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .borrow-button:hover {
+            background: #218838;
+        }
+
+        .return-button {
+            background: #ff6f61;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .return-button:hover {
+            background: #d50000;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="/member/dashboard" class="go-back">Go Back</a>
+
+    <div class="search-bar">
+        <form action="/book/memberbooksearch" method="get">
+            <input type="text" name="query" placeholder="Search by title" required>
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <div class="container">
+        <h1>All Books</h1>
+        <ul class="book-list">
+            <li th:each="book : ${books}">
+                <strong>Title:</strong> <span th:text="${book.title}"></span> <br>
+                <strong>Author:</strong> <span th:text="${book.authorName}"></span> <br>
+                <strong>Genre:</strong> <span th:text="${book.genre}"></span> <br>
+                <strong>Publication Year:</strong> <span th:text="${book.publicationYear}"></span> <br>
+                <strong>ISBN:</strong> <span th:text="${book.isbn}"></span> <br>
+                <strong>Status:</strong>
+                <span th:if="${book.isBorrowed}">Borrowed</span>
+                <span th:unless="${book.isBorrowed}">Available</span> <br>
+
+                <!-- Borrow Button (only visible if the book is available) -->
+                <form th:if="${!book.isBorrowed}" action="/book/borrow" method="post">
+                    <input type="hidden" name="bookId" th:value="${book.bookId}">
+                    <input type="hidden" name="memberId" th:value="${session.memberId}">
+                    <button type="submit" class="borrow-button">Borrow</button>
+                </form>
+
+                <!-- Return Button (only for borrowed books by the logged-in user) -->
+                <form th:if="${book.isBorrowed and book.borrowedBy.memberId == session.memberId}" action="/book/return"
+                    method="post">
+                    <input type="hidden" name="bookId" th:value="${book.bookId}">
+                    <button type="submit" class="return-button">Return</button>
+                </form>
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: url('/lbry.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .go-back {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff6f61;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .go-back:hover {
+            background: #d50000;
+            transform: scale(1.05);
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            width: 80%;
+            max-width: 800px;
+            margin-top: 20px;
+        }
+
+        h1 {
+            color: hsl(0, 100%, 3%);
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .book-list {
+            list-style: none;
+            text-align: left;
+            padding: 0;
+            color: #222222;
+        }
+
+        .book-list li {
+            background: rgba(255, 255, 255, 0.4);
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .error-message {
+            color: red;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <a th:href="@{/book/list}" class="go-back">Go Back</a>  
+    
+    <div class="container">
+        <h1>Search Results for "<span th:text="${query}"></span>"</h1>
+        
+        <div th:if="${error}" class="error-message">
+            <p th:text="${error}"></p>
+        </div>
+        
+        <ul class="book-list" th:if="${books != null and not books.isEmpty()}">
+            <li th:each="book : ${books}">
+                <strong>Title:</strong> <span th:text="${book.title}"></span> <br>
+                <strong>Author:</strong> <span th:text="${book.authorName}"></span> <br>
+                <strong>Genre:</strong> <span th:text="${book.genre}"></span> <br>
+                <strong>Publication Year:</strong> <span th:text="${book.publicationYear}"></span> <br>
+                <strong>ISBN:</strong> <span th:text="${book.isbn}"></span>
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>

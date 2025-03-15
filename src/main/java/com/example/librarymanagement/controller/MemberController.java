@@ -59,18 +59,20 @@ public class MemberController {
     public String loginMember(@RequestParam String userName, @RequestParam String password, Model model,
             HttpSession session) {
         Optional<Member> member = memberRepository.findByUserName(userName);
-
+    
         if (member.isPresent() 
             && member.get().getUserName().equals(userName)
             && member.get().getPassword().equals(password)) 
         {
-            session.setAttribute("loggedInMember", member.get());
+            session.setAttribute("loggedInMember", member.get());  // Store full member object
+            session.setAttribute("memberId", member.get().getMemberId());  // Store only memberId
             return "redirect:/member/dashboard";
         } else {
             model.addAttribute("error", "Invalid username or password");
             return "member/member_login";
         }
     }
+    
 
     @GetMapping("/member/dashboard")
     public String showDashboard(HttpSession session, Model model) {
@@ -83,6 +85,8 @@ public class MemberController {
         model.addAttribute("member", loggedInMember);
         return "member/member_dashboard";
     }
+
+    
 
     @GetMapping("/member/logout")
     public String logout(HttpSession session) {

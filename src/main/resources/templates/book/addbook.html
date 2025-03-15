@@ -27,23 +27,20 @@
         /* "Go Back" Button */
         .go-back {
             position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.3);
-            padding: 10px 15px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: bold;
+            top: 10px;
+            right: 10px;
+            background: #ff6f61;
             color: white;
-            text-transform: uppercase;
+            padding: 8px 16px;
+            border-radius: 6px;
             text-decoration: none;
-            transition: 0.3s;
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            font-weight: bold;
+            transition: background 0.3s ease, transform 0.3s ease;
         }
 
         .go-back:hover {
-            background: rgba(255, 255, 255, 0.5);
-            color: black;
+            background: #d50000;
+            transform: scale(1.05);
         }
 
         .container {
@@ -64,7 +61,7 @@
         }
 
         h2 {
-            color: #ffffff;
+            color: hsl(0, 0%, 0%);
             font-size: 24px;
             font-weight: 600;
             margin-bottom: 15px;
@@ -79,7 +76,7 @@
         label {
             font-size: 13px;
             font-weight: bold;
-            color: #ffffff;
+            color: hsl(0, 0%, 0%);
             text-align: left;
             display: block;
             margin-bottom: 3px;
@@ -140,7 +137,7 @@
 </head>
 <body>
     <!-- "Go Back" Button -->
-    <a th:href="@{/loginpage}" class="go-back">Go Back</a>
+    <a th:href="@{/admin/dashboard}" class="go-back">Go Back</a>
     
     <div class="container">
         <h2>NEW BOOK ENTRY</h2>

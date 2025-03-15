@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Result</title>
+    <title>My Borrowed Books</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
@@ -19,9 +19,9 @@
             background: url('/lbry.jpg') no-repeat center center fixed;
             background-size: cover;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            height: 100vh;
+            padding: 20px;
         }
 
         .container {
@@ -31,22 +31,30 @@
             border-radius: 12px;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
             text-align: center;
-            max-width: 320px;
-            width: 85%;
-            transition: transform 0.3s ease-in-out;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .container:hover {
-            transform: scale(1.03);
+            max-width: 600px;
+            width: 90%;
+            margin-top: 20px;
         }
 
         h1 {
-            color: hsl(0, 57%, 3%);
-            font-size: 22px;
+            color: #222;
+            font-size: 24px;
             font-weight: 600;
             margin-bottom: 15px;
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .book-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .book-list li {
+            background: rgba(255, 255, 255, 0.4);
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            font-size: 16px;
         }
 
         .btn {
@@ -72,8 +80,19 @@
 
 <body>
     <div class="container">
-        <h1>Successful...</h1>
-        <a href="/addingbooks" class="btn">Go Back</a>
+        <h1>My Borrowed Books</h1>
+
+        <ul class="book-list">
+            <li th:each="book : ${borrowedBooks}">
+                <strong>Title:</strong> <span th:text="${book.title}"></span> <br>
+                <strong>Author:</strong> <span th:text="${book.authorName}"></span> <br>
+                <strong>Genre:</strong> <span th:text="${book.genre}"></span> <br>
+                <strong>Return Date:</strong> <span th:text="${book.BorrowedDate}"></span> <br>
+                <strong>Return Date:</strong> <span th:text="${book.returnDate}"></span> <br>
+            </li>
+        </ul>
+
+        <a href="/member/dashboard" class="btn">Go Back</a>
     </div>
 </body>
 
