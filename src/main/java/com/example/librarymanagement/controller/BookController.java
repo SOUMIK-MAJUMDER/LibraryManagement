@@ -125,9 +125,6 @@ public class BookController {
         return "book/bookactionmessage";
     }
 
-
-
-
     @PostMapping("/return")
     public String returnBook(@RequestParam Integer bookId, Model model) {
         System.out.println("Received request to return bookId: " + bookId);
@@ -157,19 +154,46 @@ public class BookController {
         return "book/bookactionmessage";
     }
 
-
     @GetMapping("/mybooks")
-public String myBorrowedBooks(Model model, HttpSession session) {
-    // Get the logged-in member's ID from the session (guaranteed to exist)
-    Integer memberId = (Integer) session.getAttribute("memberId");
+    public String myBorrowedBooks(Model model, HttpSession session) {
 
-    // Fetch books borrowed by the logged-in member
-    List<Book> borrowedBooks = bookRepository.findByBorrowedBy_MemberId(memberId);
+        Integer memberId = (Integer) session.getAttribute("memberId"); // Get the logged-in member's ID from the session
 
-    model.addAttribute("borrowedBooks", borrowedBooks);
-    return "book/myborrowedbooks"; // Show the borrowed books page
-}
+        List<Book> borrowedBooks = bookRepository.findByBorrowedBy_MemberId(memberId); // Fetch books borrowed by the
 
+        model.addAttribute("borrowedBooks", borrowedBooks);
+        return "book/myborrowedbooks"; // Show the borrowed books page
+    }
+
+
+    // Delete book
+    @GetMapping("/delete/{bookId}")
+    public String deleteBook(@PathVariable Integer bookId, RedirectAttributes redirectAttributes) {
+
+        bookRepository.deleteById(bookId);
+
+        return "/book/bookremovemessage";
+    }
+
+    // Display books for members
+    @GetMapping("/booklistadmin")
+    public String listBooksForadmin(Model model) {
+        model.addAttribute("books", bookRepository.findAll());
+        return "book/adminbooklist";
+    }
+
+    // Search books by title
+    @GetMapping("/adminbooksearch")
+    public String searchBookadmin(@RequestParam("query") String query, Model model) {
+        List<Book> books = bookRepository.findByTitleContainingIgnoreCase(query);
+
+        if (books.isEmpty()) {
+            model.addAttribute("error", "No books found for: " + query);
+        }
+        model.addAttribute("books", books);
+        model.addAttribute("query", query);
+        return "book/adminbooksearchresults";
+    }
 
     // Return all books as JSON
     @GetMapping("/all")

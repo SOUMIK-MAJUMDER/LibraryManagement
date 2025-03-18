@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Result</title>
+    <title>Admin Dashboard</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
@@ -22,31 +21,31 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            flex-direction: column;
         }
 
-        /* "Go Back" Button */
-        .go-back {
+        .top-buttons {
             position: absolute;
-            top: 10px;
-            right: 10px;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
             background: #ff6f61;
             color: white;
-            padding: 8px 16px;
+            padding: 10px 18px;
             border-radius: 6px;
             text-decoration: none;
             font-weight: bold;
             transition: background 0.3s ease, transform 0.3s ease;
+            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
         }
 
-        .go-back:hover {
+        .btn:hover {
             background: #d50000;
             transform: scale(1.05);
-        }
-
-        .book_adding{
-            position: absolute;
-            top: 70px;
-            right: 20px;
         }
 
         .container {
@@ -56,7 +55,7 @@
             border-radius: 15px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
             text-align: center;
-            max-width: 380px;
+            max-width: 400px;
             width: 90%;
             transition: transform 0.3s ease-in-out;
             border: 1px solid rgba(255, 255, 255, 0.4);
@@ -67,11 +66,16 @@
         }
 
         h1 {
-            color: #222222;
+            color: #222;
             font-size: 24px;
             font-weight: 700;
             margin-bottom: 15px;
             text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .admin-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
         }
 
         ul {
@@ -79,7 +83,7 @@
             text-align: left;
             padding: 0;
             margin-top: 10px;
-            color: #222222;
+            color: #222;
         }
 
         ul li {
@@ -95,47 +99,29 @@
             justify-content: center;
             margin-top: 15px;
         }
-
-        .btn {
-            display: inline-block;
-            padding: 12px 24px;
-            background: linear-gradient(135deg, #ff6f61, #d50000);
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: bold;
-            text-transform: uppercase;
-            transition: all 0.3s ease;
-            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .btn:hover {
-            background: linear-gradient(135deg, #d50000, #9b0000);
-            transform: translateY(-3px);
-            box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.3);
-        }
     </style>
 </head>
 
 <body>
-    <!-- "Go Back" Button -->
-    <a th:href="@{/adminhome}" class="go-back">Go Back</a>
-    
+    <!-- Top Buttons -->
+    <div class="top-buttons">
+        <a th:href="@{/adminhome}" class="btn">🏠 Home</a>
+        <a th:href="@{/book/add}" class="btn">➕ Add Books</a>
+        <a th:href="@{/book/booklistadmin}" class="btn">📚 Book List</a>  <!-- New Book List Button -->
+    </div>
+
+    <!-- Admin Dashboard -->
     <div class="container">
+        <div class="admin-icon">👤</div>
         <h1>Welcome, <span th:text="${admin.userName}"></span></h1>
         <p>Admin details:</p>
         <ul>
-            <li><strong>Full Name:</strong> <span th:text="${admin.firstName} + ' ' + ${admin.lastName}"></span></li>
+            <li><strong>Full Name:</strong> <span th:text="${admin.firstName + ' ' + admin.lastName}"></span></li>
             <li><strong>Contact No:</strong> <span th:text="${admin.contactNo}"></span></li>
         </ul>
         <div class="btn-container">
-            <a href="/admin/logout" class="btn">Logout</a>
+            <a href="/admin/logout" class="btn">🚪 Logout</a>
         </div>
     </div>
-    <div class="book_adding">
-        <a th:href="@{/addingbooks}" class="go-back">Add Books</a>
-    </div>
 </body>
-
 </html>

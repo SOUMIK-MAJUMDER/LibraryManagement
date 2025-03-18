@@ -7,10 +7,17 @@ import com.example.librarymanagement.model.Member;
 
 import java.util.Optional;
 
+import org.springframework.data.jpa.repository.Query;
+
 // This will be AUTO IMPLEMENTED by Spring into a Bean called MemberRepository
 // CRUD refers Create, Read, Update, Delete
 
 public interface MemberRepository extends CrudRepository<Member, Integer> {
+
     Optional<Member> findByUserName(String userName);
+    
+  // Count all registered members
+  @Query("SELECT COUNT(m) FROM Member m")
+  int getActiveMembers();
 
 }

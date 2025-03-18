@@ -1,7 +1,6 @@
 package com.example.librarymanagement.model;
 
 import java.time.LocalDate;
-
 import jakarta.persistence.*;
 
 @Entity
@@ -14,21 +13,23 @@ public class Book {
     @Column(nullable = false, length = 255)
     private String title;
 
+    @Column(nullable = false, length = 150)
     private String authorName;
 
     @Column(length = 100)
     private String genre;
 
+    @Column(nullable = false)
     private Integer publicationYear;
 
-    @Column(length = 13)
+    @Column(length = 13, unique = true)
     private String isbn;
 
-    private boolean isBorrowed = false; // Track book availability
+    private boolean isBorrowed = false; // Default: Book is available
 
-    @ManyToOne
-    @JoinColumn(name = "borrowed_by_id")
-    private Member borrowedBy; // The member who borrowed the book
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "borrowed_by_id", referencedColumnName = "memberId", foreignKey = @ForeignKey(name = "FK_BORROWED_BY"))
+    private Member borrowedBy; // Ensure member exists before assigning
 
     private LocalDate borrowedDate; // Date when the book was borrowed
     private LocalDate returnDate; // Date when the book is to be returned
@@ -38,8 +39,7 @@ public class Book {
     }
 
     // Parameterized constructor
-    public Book(Integer bookId, String title, String authorName, String genre, Integer publicationYear, String isbn) {
-        this.bookId = bookId;
+    public Book(String title, String authorName, String genre, Integer publicationYear, String isbn) {
         this.title = title;
         this.authorName = authorName;
         this.genre = genre;
@@ -120,13 +120,35 @@ public class Book {
         this.borrowedDate = borrowedDate;
     }
 
-    public LocalDate getReturnDate() { 
+    public LocalDate getReturnDate() {
         return returnDate;
     }
-    
 
     public void setReturnDate(LocalDate returnDate) {
         this.returnDate = returnDate;
     }
-    
+
+    @PrePersist
+    @PreUpdate
+    public void updateBorrowedStatus() {
+        this.isBorrowed = (this.borrowedBy != null
+                && (this.returnDate == null || this.returnDate.isAfter(LocalDate.now())));
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "bookId=" + bookId +
+                ", title='" + title + '\'' +
+                ", authorName='" + authorName + '\'' +
+                ", genre='" + genre + '\'' +
+                ", publicationYear=" + publicationYear +
+                ", isbn='" + isbn + '\'' +
+                ", isBorrowed=" + isBorrowed +
+                ", borrowedBy="
+                + (borrowedBy != null ? borrowedBy.getFirstName() + " " + borrowedBy.getLastName() : "None") +
+                ", borrowedDate=" + borrowedDate +
+                ", returnDate=" + returnDate +
+                '}';
+    }
 }
