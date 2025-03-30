@@ -123,6 +123,33 @@
             background: #ff4b5c;
             color: white;
         }
+
+        .search-bar {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+
+        .search-bar input {
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            width: 200px;
+        }
+
+        .search-bar button {
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: none;
+            background: #ff6f61;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .search-bar button:hover {
+            background: #d50000;
+        }
     </style>
 
     <script>
@@ -146,6 +173,13 @@
 
     <div th:if="${error}" class="alert error">
         <p th:text="${error}"></p>
+    </div>
+
+    <div class="search-bar">
+        <form action="/book/adminbooksearch" method="get">
+            <input type="text" name="query" placeholder="Search by title" required>
+            <button type="submit">Search</button>
+        </form>
     </div>
 
     <div class="container">

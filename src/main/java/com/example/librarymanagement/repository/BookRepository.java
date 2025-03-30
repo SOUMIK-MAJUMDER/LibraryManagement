@@ -21,7 +21,7 @@ public interface BookRepository extends CrudRepository<Book, Integer> {
      List<Book> findByBorrowedBy_MemberId(Integer memberId);
 
      @Query("SELECT COUNT(b) FROM Book b WHERE b.isBorrowed = true")
-     int getBooksBorrowed();  // Corrected query
+     int getBooksBorrowed();  
 
      @Query("SELECT COUNT(b) FROM Book b")
      int getTotalBooks();

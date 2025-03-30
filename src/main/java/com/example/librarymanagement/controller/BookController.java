@@ -155,6 +155,7 @@ public class BookController {
         book.setBorrowedBy(null);
         book.setBorrowedDate(null);
         book.setReturnDate(null);
+        book.setExtensionCount(0);
 
         bookRepository.save(book);
 
