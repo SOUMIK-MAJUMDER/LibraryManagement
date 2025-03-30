@@ -1,12 +1,17 @@
 package com.example.librarymanagement.controller;
 
+import java.security.Principal;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.librarymanagement.model.Book;
@@ -35,23 +40,26 @@ public class BookController {
         return "book/addbook"; // Displays the book registration form
     }
 
+
+
+
+    
     // Save a new book
     @PostMapping("/save")
     public String saveBook(Book book) {
         try {
             bookRepository.save(book);
-            return "redirect:/book/success"; // Redirect to success page
+            return "book/bookresult";
         } catch (Exception e) {
             e.printStackTrace();
             return "error"; // Redirect to error page if an exception occurs
         }
     }
 
-    // Success page after adding a book
-    @GetMapping("/success")
-    public String showSuccessPage() {
-        return "book/bookresult";
-    }
+
+
+
+
 
     // Display all books
     @GetMapping("/list")
@@ -60,12 +68,22 @@ public class BookController {
         return "book/allbooksdetails";
     }
 
+
+
+
+
+
     // Display books for members
     @GetMapping("/memberbooklist")
     public String listBooksForMembers(Model model) {
         model.addAttribute("books", bookRepository.findAll());
         return "book/booklistformembers";
     }
+
+
+
+
+
 
     // Search books by title
     @GetMapping("/search")
@@ -80,6 +98,10 @@ public class BookController {
         return "book/booksearchresults";
     }
 
+
+
+
+
     // Search books by title
     @GetMapping("/memberbooksearch")
     public String searchBooksmember(@RequestParam("query") String query, Model model) {
@@ -93,25 +115,18 @@ public class BookController {
         return "book/memberbooksearchresults";
     }
 
+
+
+
+
+    
+
+    // Borrow a book
     @PostMapping("/borrow")
     public String borrowBook(@RequestParam Integer bookId, @RequestParam Integer memberId, Model model) {
         Optional<Book> optionalBook = bookRepository.findById(bookId);
-        if (optionalBook.isEmpty()) {
-            model.addAttribute("error", "Book not found.");
-            return "book/booksearchresults";
-        }
-
         Book book = optionalBook.get();
-        if (book.isBorrowed()) {
-            model.addAttribute("error", "Book is already borrowed.");
-            return "book/booksearchresults";
-        }
-
         Optional<Member> optionalMember = memberRepository.findById(memberId);
-        if (optionalMember.isEmpty()) {
-            model.addAttribute("error", "Member not found.");
-            return "book/booksearchresults";
-        }
 
         // Assign book to member
         Member member = optionalMember.get();
@@ -125,23 +140,15 @@ public class BookController {
         return "book/bookactionmessage";
     }
 
-    @PostMapping("/return")
-    public String returnBook(@RequestParam Integer bookId, Model model) {
-        System.out.println("Received request to return bookId: " + bookId);
 
+
+
+    // Return book & calculate fine
+    @PostMapping("/return")
+    public String returnBook(@RequestParam Integer bookId, RedirectAttributes redirectAttributes) {
         Optional<Book> optionalBook = bookRepository.findById(bookId);
-        if (optionalBook.isEmpty()) {
-            System.out.println("Error: Book not found.");
-            model.addAttribute("error", "Book not found.");
-            return "book/booksearchresults";
-        }
 
         Book book = optionalBook.get();
-        if (!book.isBorrowed()) {
-            System.out.println("Error: Book is not currently borrowed.");
-            model.addAttribute("error", "This book is not borrowed.");
-            return "book/bookactionmessage";
-        }
 
         // Reset book status
         book.setBorrowed(false);
@@ -150,9 +157,14 @@ public class BookController {
         book.setReturnDate(null);
 
         bookRepository.save(book);
-        model.addAttribute("success", "Book returned successfully!");
-        return "book/bookactionmessage";
+
+        return "redirect:/book/mybooks";
     }
+
+
+
+
+
 
     @GetMapping("/mybooks")
     public String myBorrowedBooks(Model model, HttpSession session) {
@@ -166,14 +178,45 @@ public class BookController {
     }
 
 
+
+
+
+
+    @PostMapping("/extendReturnDate/{bookId}")
+    public String extendReturnDate(@PathVariable Integer bookId, HttpSession session,
+            RedirectAttributes redirectAttributes) {
+
+        Optional<Book> optionalBook = bookRepository.findById(bookId);
+
+        Book book = optionalBook.get();
+
+        // Extend return date by 7 days
+        book.setReturnDate(book.getReturnDate().plusDays(7));
+        book.setExtensionCount(book.getExtensionCount() + 1);
+        bookRepository.save(book);
+
+        redirectAttributes.addFlashAttribute("success", "Book return date extended successfully.");
+        return "redirect:/book/mybooks"; // Redirect back to 'My Borrowed Books' after extension
+    }
+
+
+
+
+
+
     // Delete book
     @GetMapping("/delete/{bookId}")
     public String deleteBook(@PathVariable Integer bookId, RedirectAttributes redirectAttributes) {
 
         bookRepository.deleteById(bookId);
-
         return "/book/bookremovemessage";
     }
+
+
+
+
+
+
 
     // Display books for members
     @GetMapping("/booklistadmin")
@@ -181,6 +224,12 @@ public class BookController {
         model.addAttribute("books", bookRepository.findAll());
         return "book/adminbooklist";
     }
+
+
+
+
+
+
 
     // Search books by title
     @GetMapping("/adminbooksearch")
@@ -194,6 +243,11 @@ public class BookController {
         model.addAttribute("query", query);
         return "book/adminbooksearchresults";
     }
+
+
+
+
+
 
     // Return all books as JSON
     @GetMapping("/all")

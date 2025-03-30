@@ -117,19 +117,7 @@
             background: #218838;
         }
 
-        .return-button {
-            background: #ff6f61;
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-
-        .return-button:hover {
-            background: #d50000;
-        }
+     
     </style>
 </head>
 
@@ -163,12 +151,7 @@
                     <button type="submit" class="borrow-button">Borrow</button>
                 </form>
 
-                <!-- Return Button (only for borrowed books by the logged-in user) -->
-                <form th:if="${book.isBorrowed and book.borrowedBy.memberId == session.memberId}" action="/book/return"
-                    method="post">
-                    <input type="hidden" name="bookId" th:value="${book.bookId}">
-                    <button type="submit" class="return-button">Return</button>
-                </form>
+             
             </li>
         </ul>
     </div>

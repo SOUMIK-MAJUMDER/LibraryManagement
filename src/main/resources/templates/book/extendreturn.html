@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extend Return Date</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background: #f4f4f4;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: inline-block;
+        }
+        h2 {
+            color: #333;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background: #388E3C;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Extend Return Date</h2>
+        <p>Are you sure you want to extend the return date for this book?</p>
+
+        <form th:action="@{/book/extendReturnDate/{bookId}(bookId=${bookId})}" method="post">
+            <button type="submit" class="btn">Confirm Extension</button>
+        </form>
+        
+
+        <br><br>
+        <a href="/book/mybooks" class="btn" style="background: #d50000;">Cancel</a>
+    </div>
+
+</body>
+</html>

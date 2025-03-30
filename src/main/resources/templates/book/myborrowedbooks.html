@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -21,50 +21,82 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px;
+            justify-content: center;
+            padding: 40px;
         }
 
         .container {
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(10px);
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(12px);
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
             text-align: center;
-            max-width: 600px;
-            width: 90%;
-            margin-top: 20px;
+            max-width: 800px;
+            width: 100%;
+            animation: fadeIn 0.8s ease-in-out;
         }
 
         h1 {
-            color: #222;
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 600;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .alert {
+            padding: 12px;
             margin-bottom: 15px;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 500;
+            text-align: center;
+            width: 100%;
+            display: inline-block;
+            animation: slideDown 0.5s ease-in-out;
+        }
+
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
         }
 
         .book-list {
             list-style: none;
             padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
 
-        .book-list li {
-            background: rgba(255, 255, 255, 0.4);
-            padding: 10px;
-            margin-bottom: 8px;
-            border-radius: 8px;
-            font-size: 16px;
+        .book-box {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 500;
+            border: 2px solid rgba(255, 255, 255, 0.4); /* ✅ Box Shape with Border */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .book-box:hover {
+            transform: translateY(-5px);
         }
 
         .btn {
             display: inline-block;
-            padding: 10px 20px;
+            padding: 12px 24px;
             background: linear-gradient(135deg, #ff6f61, #d50000);
-            color: white;
             text-decoration: none;
-            border-radius: 6px;
-            font-size: 14px;
+            border-radius: 8px;
+            font-size: 16px;
             font-weight: bold;
             text-transform: uppercase;
             transition: all 0.3s ease;
@@ -72,8 +104,63 @@
 
         .btn:hover {
             background: linear-gradient(135deg, #d50000, #9b0000);
-            transform: translateY(-2px);
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .action-button {
+            display: inline-block;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            text-transform: uppercase;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .return-button {
+            background: #ff6f61;
+            border: 2px solid #d50000;
+        }
+
+        .return-button:hover {
+            background: #d50000;
+        }
+
+        .extend-button {
+            background: #4CAF50;
+            border: 2px solid #388E3C;
+        }
+
+        .extend-button:hover {
+            background: #388E3C;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
@@ -82,16 +169,41 @@
     <div class="container">
         <h1>My Borrowed Books</h1>
 
+        <!-- ✅ Success Message -->
+        <div th:if="${success}" class="alert success">
+            <span th:text="${success}"></span>
+        </div>
+
+        <!-- ❌ Error Message -->
+        <div th:if="${error}" class="alert error">
+            <span th:text="${error}"></span>
+        </div>
+
         <ul class="book-list">
-            <li th:each="book : ${borrowedBooks}">
+            <li th:each="book : ${borrowedBooks}" class="book-box">
                 <strong>Title:</strong> <span th:text="${book.title}"></span> <br>
                 <strong>Author:</strong> <span th:text="${book.authorName}"></span> <br>
                 <strong>Genre:</strong> <span th:text="${book.genre}"></span> <br>
-                <strong>Return Date:</strong> <span th:text="${book.BorrowedDate}"></span> <br>
+                <strong>Borrowed Date:</strong> <span th:text="${book.borrowedDate}"></span> <br>
                 <strong>Return Date:</strong> <span th:text="${book.returnDate}"></span> <br>
+                <strong>Extensions Used:</strong> <span th:text="${book.extensionCount}"></span> / 2 <br>
+
+                <!-- ✅ Return Button -->
+                <form th:if="${book.isBorrowed and book.borrowedBy.memberId == session.memberId}" action="/book/return"
+                    method="post">
+                    <input type="hidden" name="bookId" th:value="${book.bookId}">
+                    <button type="submit" class="action-button return-button">Return</button>
+                </form>
+
+                <!-- ✅ Extend Return Date Button -->
+                <form th:if="${book.extensionCount < 2 and book.borrowedBy.memberId == session.memberId}"
+                    th:action="@{/book/extendReturnDate/{bookId}(bookId=${book.bookId})}" method="post">
+                    <button type="submit" class="action-button extend-button">Extend Return Date</button>
+                </form>
             </li>
         </ul>
 
+        <br>
         <a href="/member/dashboard" class="btn">Go Back</a>
     </div>
 </body>

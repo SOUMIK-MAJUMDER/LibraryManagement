@@ -42,11 +42,23 @@
         }
 
         h1 {
-            color: #222;
             font-size: 22px;
             font-weight: 600;
             margin-bottom: 15px;
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .success {
+            color: #28a745;
+        }
+
+        .error {
+            color: #ff4b5c;
+        }
+
+        .fine {
+            color: #ffcc00;
+            font-weight: bold;
         }
 
         .btn {
@@ -72,8 +84,11 @@
 
 <body>
     <div class="container">
-        <h1 th:text="${success}">Action Successful</h1>
-        <a href="/book/memberbooklist" class="btn">Go Back</a>
+        <h1 th:if="${success}" class="success" th:text="${success}"></h1>
+        <h1 th:if="${fineMessage}" class="fine" th:text="${fineMessage}"></h1>
+        <h1 th:if="${error}" class="error" th:text="${error}"></h1>
+
+        <a href="/book/mybooks" class="btn">Go Back</a>
     </div>
 </body>
 

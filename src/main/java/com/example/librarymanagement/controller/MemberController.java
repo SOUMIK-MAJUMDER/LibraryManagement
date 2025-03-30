@@ -41,7 +41,7 @@ public class MemberController {
             return "redirect:/member/success"; // Redirect to success page if the form is submitted successfully
         } catch (Exception e) {
             e.printStackTrace();
-            return "error"; // Redirect to error page if an exception occurs
+            return "errormessage"; // Redirect to error page if an exception occurs
         }
     }
 
@@ -93,6 +93,7 @@ public class MemberController {
         session.invalidate();
         return "redirect:/memberlogin";
     }
+    
 
     @GetMapping(path = "/member/all")
     public @ResponseBody Iterable<Member> getAllUsers() {

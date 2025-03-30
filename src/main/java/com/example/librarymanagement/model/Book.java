@@ -34,6 +34,8 @@ public class Book {
     private LocalDate borrowedDate; // Date when the book was borrowed
     private LocalDate returnDate; // Date when the book is to be returned
 
+    private int extensionCount = 0;
+
     // Default constructor
     public Book() {
     }
@@ -126,6 +128,14 @@ public class Book {
 
     public void setReturnDate(LocalDate returnDate) {
         this.returnDate = returnDate;
+    }
+
+    public int getExtensionCount() {
+        return extensionCount;
+    }
+
+    public void setExtensionCount(int extensionCount) {
+        this.extensionCount = extensionCount;
     }
 
     @PrePersist
