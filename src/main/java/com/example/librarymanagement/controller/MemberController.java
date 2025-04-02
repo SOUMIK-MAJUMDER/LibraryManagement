@@ -3,16 +3,18 @@ package com.example.librarymanagement.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.ui.Model;
 
 import com.example.librarymanagement.model.Member;
 import com.example.librarymanagement.repository.MemberRepository;
 
 import jakarta.servlet.http.HttpSession;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 public class MemberController {
@@ -26,7 +28,7 @@ public class MemberController {
 
     @GetMapping(path = "/memberhome")
     public String showMemberHomePage() {
-        return "member/member_home"; // For 'member_home.html' templates
+        return "member/member_home"; // For 'member_dashboard.html' templates
     }
 
     @GetMapping(path = "/memberregistration")
@@ -94,6 +96,40 @@ public class MemberController {
         return "redirect:/memberlogin";
     }
     
+
+
+    // Display all members
+    @GetMapping("/member/memberlist")
+    public String listAllMembers(Model model) {
+        model.addAttribute("members", memberRepository.findAll());
+        return "member/allmemberlist"; // Display all members in a list format
+    }
+
+
+    
+    //Search books by Id
+    @GetMapping("/member/membersearch")
+    public String searchmember(@RequestParam("query") Integer query, Model model) {
+        List<Member> members = memberRepository.findByMemberId(query); 
+    
+        if (members.isEmpty()) {
+            model.addAttribute("error", "No members found for: " + query);
+        }
+        model.addAttribute("members", members);
+        model.addAttribute("query", query);
+        return "member/membersearchresult";  // Use appropriate view for member search results
+    }
+    
+
+
+    // Delete a member
+    @GetMapping("/member/delete/{memberId}")
+    public String deletemember(@PathVariable Integer memberId) {
+
+        memberRepository.deleteById(memberId);
+        return "member/memberremovemessage";
+    }
+
 
     @GetMapping(path = "/member/all")
     public @ResponseBody Iterable<Member> getAllUsers() {

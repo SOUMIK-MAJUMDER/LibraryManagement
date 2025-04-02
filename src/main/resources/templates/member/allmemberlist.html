@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Members</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: url('/lbry.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .go-back {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff6f61;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .go-back:hover {
+            background: #d50000;
+            transform: scale(1.05);
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            width: 80%;
+            max-width: 800px;
+            margin-top: 20px;
+        }
+
+        h1 {
+            color: #222222;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .member-list {
+            list-style: none;
+            text-align: left;
+            padding: 0;
+            color: #222222;
+        }
+
+        .member-list li {
+            background: rgba(255, 255, 255, 0.4);
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            font-size: 16px;
+            position: relative;
+        }
+
+        .remove-button {
+            background: #ff4b5c;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            position: absolute;
+            right: 10px;
+            top: 10px;
+        }
+
+        .remove-button:hover {
+            background: #c70039;
+        }
+
+        .alert {
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .success {
+            background: #28a745;
+            color: white;
+        }
+
+        .error {
+            background: #ff4b5c;
+            color: white;
+        }
+
+        .search-bar {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+
+        .search-bar input {
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            width: 200px;
+        }
+
+        .search-bar button {
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: none;
+            background: #ff6f61;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .search-bar button:hover {
+            background: #d50000;
+        }
+    </style>
+
+    <script>
+        function confirmDelete(memberId) {
+            let confirmAction = confirm("Are you sure you want to delete this member?");
+            if (confirmAction) {
+                window.location.href = "/member/delete/" + memberId;
+            }
+        }
+    </script>
+
+</head>
+
+<body>
+    <a href="/admin/dashboard" class="go-back">Go Back</a>
+
+    <!-- Success/Error Messages -->
+    <div th:if="${success}" class="alert success">
+        <p th:text="${success}"></p>
+    </div>
+
+    <div th:if="${error}" class="alert error">
+        <p th:text="${error}"></p>
+    </div>
+
+    <div class="search-bar">
+        <form action="/member/membersearch" method="get">
+            <input type="text" name="query" placeholder="Search by Member ID" required>
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    <div class="container">
+        <h1>All Members</h1>
+        <ul class="member-list">
+            <li th:each="member : ${members}">
+                <strong>Member ID:</strong> <span th:text="${member.memberId}"></span><br>
+                <strong>Full Name:</strong> <span th:text="${member.firstName} + ' ' + ${member.lastName}"></span><br>
+                <strong>Contact No:</strong> <span th:text="${member.contactNo}"></span><br>
+                <strong>Address:</strong> <span th:text="${member.address}"></span><br>
+
+                <!-- Remove button only appears for each member -->
+                <button class="remove-button" th:attr="onclick='confirmDelete(' + ${member.memberId} + ')'">🗑 Remove</button>
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>
