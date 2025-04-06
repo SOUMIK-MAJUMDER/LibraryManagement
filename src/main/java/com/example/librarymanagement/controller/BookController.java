@@ -116,7 +116,16 @@ public class BookController {
     }
 
 
+    @GetMapping("/mybooks")
+    public String myBorrowedBooks(Model model, HttpSession session) {
 
+        Integer memberId = (Integer) session.getAttribute("memberId"); // Get the logged-in member's ID from the session
+
+        List<Book> borrowedBooks = bookRepository.findByBorrowedBy_MemberId(memberId); // Fetch books borrowed by the
+
+        model.addAttribute("borrowedBooks", borrowedBooks);
+        return "book/myborrowedbooks"; // Show the borrowed books page
+    }
 
 
     
@@ -133,7 +142,7 @@ public class BookController {
         book.setBorrowed(true);
         book.setBorrowedBy(member);
         book.setBorrowedDate(LocalDate.now());
-        book.setReturnDate(LocalDate.now().plusDays(14)); // 2 weeks borrow period
+        book.setReturnDate(LocalDate.now().plusDays(7)); // 7 day borrow period
 
         bookRepository.save(book);
         model.addAttribute("success", "Book borrowed successfully!");
@@ -143,49 +152,87 @@ public class BookController {
 
 
 
-    // Return book & calculate fine
+    // Return book
+    // @PostMapping("/return")
+    // public String returnBook(@RequestParam Integer bookId, RedirectAttributes redirectAttributes) {
+    //     Optional<Book> optionalBook = bookRepository.findById(bookId);
+
+    //     Book book = optionalBook.get();
+
+    //     // Reset book status
+    //     book.setBorrowed(false);
+    //     book.setBorrowedBy(null);
+    //     book.setBorrowedDate(null);
+    //     book.setReturnDate(null);
+    //     book.setExtensionCount(0);
+
+    //     bookRepository.save(book);
+
+    //     return "redirect:/book/mybooks";
+    // }
+
+
+
     @PostMapping("/return")
     public String returnBook(@RequestParam Integer bookId, RedirectAttributes redirectAttributes) {
         Optional<Book> optionalBook = bookRepository.findById(bookId);
+    
 
-        Book book = optionalBook.get();
+            Book book = optionalBook.get();
+            
+            // Calculate fine before resetting book data
+            book.calculateFine();
+    
+            // Store fine amount for display
+            int fine = book.getFineAmount();
 
-        // Reset book status
-        book.setBorrowed(false);
-        book.setBorrowedBy(null);
-        book.setBorrowedDate(null);
-        book.setReturnDate(null);
-        book.setExtensionCount(0);
+            if (fine > 0) 
+            {
+                redirectAttributes.addFlashAttribute("error", "Late return! Fine: ₹" + fine);
+                return "book/payfine";
+            } 
+            // Reset book details
+            book.setBorrowed(false);
+            book.setBorrowedBy(null);
+            book.setBorrowedDate(null);
+            book.setReturnDate(null);
+            book.setExtensionCount(0);
+    
+            bookRepository.save(book);
+    
+         
+            redirectAttributes.addFlashAttribute("success", "Book returned successfully.");
+            return "redirect:/book/mybooks";
+    }
+    
 
-        bookRepository.save(book);
 
-        return "redirect:/book/mybooks";
+    @PostMapping("/finepaid")
+    public String bookfinepaid(@RequestParam Integer bookId, RedirectAttributes redirectAttributes) {
+        Optional<Book> optionalBook = bookRepository.findById(bookId);
+    
+
+            Book book = optionalBook.get();
+
+            book.setBorrowed(false);
+            book.setBorrowedBy(null);
+            book.setBorrowedDate(null);
+            book.setReturnDate(null);
+            book.setExtensionCount(0);
+            book.setFineAmount(0); 
+    
+            bookRepository.save(book);
+    
+         
+            redirectAttributes.addFlashAttribute("success", "Book returned successfully.");
+            return "redirect:/book/mybooks";
     }
 
-
-
-
-
-
-    @GetMapping("/mybooks")
-    public String myBorrowedBooks(Model model, HttpSession session) {
-
-        Integer memberId = (Integer) session.getAttribute("memberId"); // Get the logged-in member's ID from the session
-
-        List<Book> borrowedBooks = bookRepository.findByBorrowedBy_MemberId(memberId); // Fetch books borrowed by the
-
-        model.addAttribute("borrowedBooks", borrowedBooks);
-        return "book/myborrowedbooks"; // Show the borrowed books page
-    }
-
-
-
-
+   
 
 
     @PostMapping("/extendReturnDate/{bookId}")
-    public String extendReturnDate(@PathVariable Integer bookId, HttpSession session,
-            RedirectAttributes redirectAttributes) {
+    public String extendReturnDate(@PathVariable Integer bookId, HttpSession session,RedirectAttributes redirectAttributes) {
 
         Optional<Book> optionalBook = bookRepository.findById(bookId);
 

@@ -1,6 +1,8 @@
 package com.example.librarymanagement.model;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -35,6 +37,8 @@ public class Book {
     private LocalDate returnDate; // Date when the book is to be returned
 
     private int extensionCount = 0;
+
+    private int fineAmount = 0; // Fine in rupees
 
     // Default constructor
     public Book() {
@@ -138,6 +142,24 @@ public class Book {
         this.extensionCount = extensionCount;
     }
 
+    public int getFineAmount() {
+        return fineAmount;
+    }
+
+    public void setFineAmount(int fineAmount) {
+        this.fineAmount = fineAmount;
+    }
+
+    public void calculateFine() {
+        if (returnDate != null && returnDate.isBefore(LocalDate.now())) {
+            long overdueDays = ChronoUnit.DAYS.between(returnDate, LocalDate.now());
+            this.fineAmount = (int) (overdueDays * 5); // ₹5 per day
+        } else {
+            this.fineAmount = 0;
+        }
+    }
+
+    
     @PrePersist
     @PreUpdate
     public void updateBorrowedStatus() {

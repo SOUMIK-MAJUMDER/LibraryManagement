@@ -169,11 +169,6 @@
     <div class="container">
         <h1>My Borrowed Books</h1>
 
-        <!-- ✅ Success Message -->
-        <div th:if="${success}" class="alert success">
-            <span th:text="${success}"></span>
-        </div>
-
         <!-- ❌ Error Message -->
         <div th:if="${error}" class="alert error">
             <span th:text="${error}"></span>
@@ -182,26 +177,10 @@
         <ul class="book-list">
             <li th:each="book : ${borrowedBooks}" class="book-box">
                 <strong>Title:</strong> <span th:text="${book.title}"></span> <br>
-                <strong>Author:</strong> <span th:text="${book.authorName}"></span> <br>
-                <strong>Genre:</strong> <span th:text="${book.genre}"></span> <br>
-                <strong>Borrowed Date:</strong> <span th:text="${book.borrowedDate}"></span> <br>
-                <strong>Return Date:</strong> <span th:text="${book.returnDate}"></span> <br>
-                <strong>Extensions Used:</strong> <span th:text="${book.extensionCount}"></span> / 2 <br>
                 <strong>Fine:</strong> ₹<span th:text="${book.fineAmount}"></span> <br>
 
 
-                <!-- ✅ Return Button -->
-                <form th:if="${book.isBorrowed and book.borrowedBy.memberId == session.memberId}" action="/book/return"
-                    method="post">
-                    <input type="hidden" name="bookId" th:value="${book.bookId}">
-                    <button type="submit" class="action-button return-button">Return</button>
-                </form>
-
-                <!-- ✅ Extend Return Date Button -->
-                <form th:if="${book.extensionCount < 2 and book.borrowedBy.memberId == session.memberId}"
-                    th:action="@{/book/extendReturnDate/{bookId}(bookId=${book.bookId})}" method="post">
-                    <button type="submit" class="action-button extend-button">Extend Return Date</button>
-                </form>
+                <a href="/book/finepaid" class="btn">Pay Fine</a>
             </li>
         </ul>
 
