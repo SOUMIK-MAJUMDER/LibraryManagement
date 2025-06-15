@@ -154,58 +154,58 @@ public class BookController {
 
 
 
-    // Return book
-    @PostMapping("/return")
-    public String returnBook(@RequestParam Integer bookId, RedirectAttributes redirectAttributes) {
-        Optional<Book> optionalBook = bookRepository.findById(bookId);
-
-        Book book = optionalBook.get();
-
-        // Reset book status
-        book.setBorrowed(false);
-        book.setBorrowedBy(null);
-        book.setBorrowedDate(null);
-        book.setReturnDate(null);
-        book.setExtensionCount(0);
-
-        bookRepository.save(book);
-
-        return "redirect:/book/mybooks";
-    }
-
-
-
+    // // Return book
     // @PostMapping("/return")
     // public String returnBook(@RequestParam Integer bookId, RedirectAttributes redirectAttributes) {
     //     Optional<Book> optionalBook = bookRepository.findById(bookId);
+
+    //     Book book = optionalBook.get();
+
+    //     // Reset book status
+    //     book.setBorrowed(false);
+    //     book.setBorrowedBy(null);
+    //     book.setBorrowedDate(null);
+    //     book.setReturnDate(null);
+    //     book.setExtensionCount(0);
+
+    //     bookRepository.save(book);
+
+    //     return "redirect:/book/mybooks";
+    // }
+
+
+
+    @PostMapping("/return")
+    public String returnBook(@RequestParam Integer bookId, RedirectAttributes redirectAttributes) {
+        Optional<Book> optionalBook = bookRepository.findById(bookId);
     
 
-    //         Book book = optionalBook.get();
+            Book book = optionalBook.get();
             
-    //         // Calculate fine before resetting book data
-    //         book.calculateFine();
+            // Calculate fine before resetting book data
+            book.calculateFine();
     
-    //         // Store fine amount for display
-    //         int fine = book.getFineAmount();
+            // Store fine amount for display
+            int fine = book.getFineAmount();
 
-    //         if (fine > 0) 
-    //         {
-    //             redirectAttributes.addFlashAttribute("error", "Late return! Fine: ₹" + fine);
-    //             return "book/payfine";
-    //         } 
-    //         // Reset book details
-    //         book.setBorrowed(false);
-    //         book.setBorrowedBy(null);
-    //         book.setBorrowedDate(null);
-    //         book.setReturnDate(null);
-    //         book.setExtensionCount(0);
+            if (fine > 0) 
+            {
+                redirectAttributes.addFlashAttribute("error", "Late return! Fine: ₹" + fine);
+                return "book/payfine";
+            } 
+            // Reset book details
+            book.setBorrowed(false);
+            book.setBorrowedBy(null);
+            book.setBorrowedDate(null);
+            book.setReturnDate(null);
+            book.setExtensionCount(0);
     
-    //         bookRepository.save(book);
+            bookRepository.save(book);
     
          
-    //         redirectAttributes.addFlashAttribute("success", "Book returned successfully.");
-    //         return "redirect:/book/mybooks";
-    // }
+            redirectAttributes.addFlashAttribute("success", "Book returned successfully.");
+            return "redirect:/book/mybooks";
+    }
     
 
 

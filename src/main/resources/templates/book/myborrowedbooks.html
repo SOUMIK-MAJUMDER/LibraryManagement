@@ -81,7 +81,7 @@
             border-radius: 10px;
             font-size: 18px;
             font-weight: 500;
-            border: 2px solid rgba(255, 255, 255, 0.4); /* ✅ Box Shape with Border */
+            border: 2px solid rgba(255, 255, 255, 0.4);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             transition: transform 0.3s ease;
         }
@@ -140,7 +140,16 @@
             background: #388E3C;
         }
 
-        /* Animations */
+        .fine-button {
+            background: #FFD700;
+            border: 2px solid #DAA520;
+            color: #000;
+        }
+
+        .fine-button:hover {
+            background: #DAA520;
+        }
+
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -187,21 +196,24 @@
                 <strong>Borrowed Date:</strong> <span th:text="${book.borrowedDate}"></span> <br>
                 <strong>Return Date:</strong> <span th:text="${book.returnDate}"></span> <br>
                 <strong>Extensions Used:</strong> <span th:text="${book.extensionCount}"></span> / 2 <br>
-                <!-- <strong>Fine:</strong> ₹<span th:text="${book.fineAmount}"></span> <br> -->
-                 
-
+                
+                <!-- ✅ Fine Display -->
+                <strong>Fine:</strong> ₹<span th:text="${book.fineAmount}"></span> <br>
 
                 <!-- ✅ Return Button -->
-                <form th:if="${book.isBorrowed and book.borrowedBy.memberId == session.memberId}" action="/book/return"
-                    method="post">
+                <form th:if="${book.isBorrowed and book.borrowedBy.memberId == session.memberId}" action="/book/return" method="post">
                     <input type="hidden" name="bookId" th:value="${book.bookId}">
                     <button type="submit" class="action-button return-button">Return</button>
                 </form>
 
                 <!-- ✅ Extend Return Date Button -->
-                <form th:if="${book.extensionCount < 2 and book.borrowedBy.memberId == session.memberId}"
-                    th:action="@{/book/extendReturnDate/{bookId}(bookId=${book.bookId})}" method="post">
+                <form th:if="${book.extensionCount < 2 and book.borrowedBy.memberId == session.memberId}" th:action="@{/book/extendReturnDate/{bookId}(bookId=${book.bookId})}" method="post">
                     <button type="submit" class="action-button extend-button">Extend Return Date</button>
+                </form>
+
+                <!-- ✅ Pay Fine Button (Optional) -->
+                <form th:if="${book.fineAmount > 0}" th:action="@{/book/payFine/{bookId}(bookId=${book.bookId})}" method="post">
+                    <button type="submit" class="action-button fine-button">Pay Fine</button>
                 </form>
             </li>
         </ul>
